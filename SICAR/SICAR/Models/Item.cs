@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SICAR.Models
+namespace Test.Models
 {
     public class Item
     {
