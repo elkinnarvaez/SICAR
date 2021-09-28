@@ -29,8 +29,9 @@ namespace SICAR
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            // DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
+            // MainPage = new SignUpPage();
         }
 
         protected override void OnStart()

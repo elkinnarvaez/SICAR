@@ -3,10 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SICAR.Views.SignUpPage">
     <ContentPage.Content>
-        <StackLayout>
+        <!--<StackLayout>
             <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+        </StackLayout>-->
+        <StackLayout Spacing="20" Padding="50" VerticalOptions="Center">
+            <!--<Image HorizontalOptions="Center" Source="login" HeightRequest="120"></Image>-->
+            <Label HorizontalOptions="Center" FontSize="30" Text="Registrarse"></Label>
+            <Entry x:Name="namesEntry" Placeholder="Nombres"></Entry>
+            <Entry x:Name="lastnamesEntry" Placeholder="Apellidos"></Entry>
+            <Entry x:Name="usernameEntry" Placeholder="Nombre de usuario"></Entry>
+            <Entry x:Name="passwordEntry" Placeholder="Contraseña" IsPassword="True"></Entry>
+            <Entry x:Name="retypedPasswordEntry" Placeholder="Confirme contraseña" IsPassword="True"></Entry>
+            <Button Text="Registrarse" TextColor="White" BackgroundColor="gray"></Button>
+            <!--<Label HorizontalOptions="Center" FontSize="15" Text="Al registrarte aceptas nuestros Terminos y Condiciones"></Label>-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
