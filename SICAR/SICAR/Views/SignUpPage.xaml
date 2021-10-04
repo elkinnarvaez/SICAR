@@ -4,28 +4,23 @@
              x:Class="SICAR.Views.SignUpPage"
              Shell.NavBarIsVisible="False">
     <ContentPage.Content>
-        <!--<StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>-->
         <Grid>
             <!--<Image Source="signup_background4.jpg" Aspect="AspectFit" />-->
             <ScrollView>
                 <StackLayout Spacing="20" Padding="50" VerticalOptions="Center">
                     <Image HorizontalOptions="Center" Source="user_logo6.png" HeightRequest="120"></Image>
                     <Label HorizontalOptions="Center" FontSize="30" Text="Registrarse"></Label>
-                    <Entry x:Name="namesEntry" Placeholder="Nombres"></Entry>
-                    <Entry x:Name="lastnamesEntry" Placeholder="Apellidos"></Entry>
-                    <Entry x:Name="usernameEntry" Placeholder="Nombre de usuario"></Entry>
-                    <Entry x:Name="passwordEntry" Placeholder="Contraseña" IsPassword="True"></Entry>
-                    <Entry x:Name="retypedPasswordEntry" Placeholder="Confirme contraseña" IsPassword="True"></Entry>
-                    <Button Text="Registrarse" TextColor="White" BackgroundColor="#2828DC"></Button>
+                    <Entry x:Name="namesEntry" Text="{Binding Names, Mode=TwoWay}" Placeholder="Nombres"></Entry>
+                    <Entry x:Name="lastnamesEntry" Text="{Binding Lastnames, Mode=TwoWay}" Placeholder="Apellidos"></Entry>
+                    <Entry x:Name="usernameEntry" Text="{Binding Username, Mode=TwoWay}" Placeholder="Nombre de usuario"></Entry>
+                    <Entry x:Name="passwordEntry" Text="{Binding Password, Mode=TwoWay}" Placeholder="Contraseña" IsPassword="True"></Entry>
+                    <Entry x:Name="retypedPasswordEntry" Text="{Binding RetypedPassword, Mode=TwoWay}" Placeholder="Confirme contraseña" IsPassword="True"></Entry>
+                    <Button Text="Registrarse" TextColor="White" BackgroundColor="#2828DC" Command="{Binding SignUpCommand}"></Button>
                     <Label HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="¿Ya tienes una cuenta? " />
-                                <Span Text="Iniciar sesión" TextColor="Blue" TextDecorations="Underline">
+                                <Span Text="Inicia sesión" TextColor="Blue" TextDecorations="Underline">
                                     <Span.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding AlreadyHaveAccountTapped}" />
                                     </Span.GestureRecognizers>
