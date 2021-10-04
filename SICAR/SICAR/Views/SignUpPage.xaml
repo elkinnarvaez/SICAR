@@ -9,28 +9,33 @@
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>-->
-        <StackLayout Spacing="20" Padding="50" VerticalOptions="Center">
-            <Image HorizontalOptions="Center" Source="user_logo.png" HeightRequest="120"></Image>
-            <Label HorizontalOptions="Center" FontSize="30" Text="Registrarse"></Label>
-            <Entry x:Name="namesEntry" Placeholder="Nombres"></Entry>
-            <Entry x:Name="lastnamesEntry" Placeholder="Apellidos"></Entry>
-            <Entry x:Name="usernameEntry" Placeholder="Nombre de usuario"></Entry>
-            <Entry x:Name="passwordEntry" Placeholder="Contraseña" IsPassword="True"></Entry>
-            <Entry x:Name="retypedPasswordEntry" Placeholder="Confirme contraseña" IsPassword="True"></Entry>
-            <Button Text="Registrarse" TextColor="White" BackgroundColor="gray"></Button>
-            <Label HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="¿Ya tienes una cuenta? " />
-                        <Span Text="Inicia sesión" TextColor="Blue" TextDecorations="Underline">
-                            <Span.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding AlreadyHaveAccountTapped}" />
-                            </Span.GestureRecognizers>
-                        </Span>
-                        <Span Text="." />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-        </StackLayout>
+        <Grid>
+            <!--<Image Source="signup_background4.jpg" Aspect="AspectFit" />-->
+            <ScrollView>
+                <StackLayout Spacing="20" Padding="50" VerticalOptions="Center">
+                    <Image HorizontalOptions="Center" Source="user_logo6.png" HeightRequest="120"></Image>
+                    <Label HorizontalOptions="Center" FontSize="30" Text="Registrarse"></Label>
+                    <Entry x:Name="namesEntry" Placeholder="Nombres"></Entry>
+                    <Entry x:Name="lastnamesEntry" Placeholder="Apellidos"></Entry>
+                    <Entry x:Name="usernameEntry" Placeholder="Nombre de usuario"></Entry>
+                    <Entry x:Name="passwordEntry" Placeholder="Contraseña" IsPassword="True"></Entry>
+                    <Entry x:Name="retypedPasswordEntry" Placeholder="Confirme contraseña" IsPassword="True"></Entry>
+                    <Button Text="Registrarse" TextColor="White" BackgroundColor="#2828DC"></Button>
+                    <Label HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="¿Ya tienes una cuenta? " />
+                                <Span Text="Iniciar sesión" TextColor="Blue" TextDecorations="Underline">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AlreadyHaveAccountTapped}" />
+                                    </Span.GestureRecognizers>
+                                </Span>
+                                <Span Text="." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
