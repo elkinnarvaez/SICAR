@@ -25,6 +25,7 @@ namespace SICAR.Views
                 Url = "https://cdn2.vectorstock.com/i/thumbs/99/26/tomato-red-vegetable-icon-cartoon-vector-38309926.jpg"
             });
 
+
             Crops.Add(new Crop
             {
                 Name = "Caña de azúcar",
