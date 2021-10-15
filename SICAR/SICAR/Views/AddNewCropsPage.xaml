@@ -16,7 +16,7 @@
                     <Picker x:Name="Crops"
                             Title="Selecciona un Cultivo"
                             TitleColor="Black"
-                            SelectedItem="{Binding TypeCrop, Mode=TwoWay}">
+                            SelectedItem="{Binding Type, Mode=TwoWay}">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
                                 <x:String>Caña de Azúcar</x:String>
@@ -27,15 +27,15 @@
                         </Picker.ItemsSource>
                     </Picker>
                     <!--<Label HorizontalOptions="Center"  FontSize="30" VerticalOptions="CenterAndExpand" Text="Nombre"></Label>-->
-                    <Entry x:Name="nameEntry" Text="{Binding NameCrop, Mode=TwoWay}" Placeholder="Nombre de Cultivo" ></Entry>
+                    <Entry x:Name="nameEntry" Text="{Binding Name, Mode=TwoWay}" Placeholder="Nombre de Cultivo" ></Entry>
                     <Label HorizontalOptions="Start" FontSize="20" Text="Fecha de Incio del Cultivo: "></Label>
                     <DatePicker x:Name="initialDateCultivo"
                     Format="D"
-                    Date="{Binding SelectedDate}"
+                    Date="{Binding Date}"
                     HorizontalOptions="Start"/>
 
-                    <Entry x:Name="hectaresEntry" Keyboard="Numeric" Text="{Binding HectaresCrop, Mode=TwoWay}" Placeholder="Cantidad de hectareas"></Entry>
-                    <Button Text="Agregar" TextColor="White" BackgroundColor="#3B4859" Command="{Binding AddNewCropCommand}"></Button>
+                    <Entry x:Name="hectaresEntry" Keyboard="Numeric" Text="{Binding Hectare, Mode=TwoWay}" Placeholder="Cantidad de hectareas"></Entry>
+                    <Button Text="Agregar" TextColor="White" BackgroundColor="#3B4859" Command="{Binding AddNewCropsCommand}"></Button>
                 </StackLayout>
             </ScrollView>
         </Grid>

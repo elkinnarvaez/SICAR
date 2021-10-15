@@ -9,7 +9,7 @@ namespace SICAR.Models
     {
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }
-        public int user { get; set; }
+        public string user { get; set; }
         public string name { get; set; }
 
         public string type { get; set; }
