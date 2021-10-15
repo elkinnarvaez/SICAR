@@ -15,6 +15,7 @@ namespace SICAR.Data
         {
             database = new SQLiteAsyncConnection(dbPath);
             database.CreateTableAsync<User>().Wait();
+            database.CreateTableAsync<Crop>().Wait();
         }
 
         public Task<List<User>> GetUsersAsync()
@@ -49,6 +50,50 @@ namespace SICAR.Data
         {
             // Delete an user.
             return database.DeleteAsync(user);
+        }
+
+
+
+        //For Crops
+
+        public Task<List<Crop>> GetAllCropsAsync()
+        {
+            return database.Table<Crop>().ToListAsync();
+        }
+        public Task<List<Crop>> GetCropsOfUserAsync(int userId)
+        {
+            //Get all Crops.
+            
+            return database.Table<Crop>()
+                            .Where(i => i.user == userId).ToListAsync();
+        }
+
+        public Task<Crop> GetCropAsync(int id)
+        {
+            // Get a specific Crop.
+            return database.Table<Crop>()
+                            .Where(i => i.id == id)
+                            .FirstOrDefaultAsync();
+        }
+
+        public Task<int> SaveCropAsync(Crop crop)
+        {
+            if (crop.id != 0)
+            {
+                // Update an existing crop.
+                return database.UpdateAsync(crop);
+            }
+            else
+            {
+                // Save a new crop.
+                return database.InsertAsync(crop);
+            }
+        }
+
+        public Task<int> DeleteCropAsync(Crop crop)
+        {
+            // Delete a crop.
+            return database.DeleteAsync(crop);
         }
     }
 }

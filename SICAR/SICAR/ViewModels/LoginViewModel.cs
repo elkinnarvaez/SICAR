@@ -79,6 +79,15 @@ namespace SICAR.ViewModels
                 Username = "";
                 Password = "";
                 // TODO: need to save the user info for further user in the application
+                Crop newCrop = new Crop()
+                {
+                    user = 1,
+                    name = "Papaya2",
+                    type = "Papaya",
+                    date = "24/04/2000",
+                    hectare = 30
+                };
+                await App.Database.SaveCropAsync(newCrop);
                 await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
             }
             else if (loginErrorCode == 0)
