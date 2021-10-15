@@ -2,8 +2,6 @@
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using SICAR.Models;
-using System.Collections.Generic;
 
 namespace SICAR.ViewModels
 {

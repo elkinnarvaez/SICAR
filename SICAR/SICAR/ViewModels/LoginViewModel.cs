@@ -13,6 +13,8 @@ namespace SICAR.ViewModels
     {
         private string username;
         private string password;
+        private string names;
+        private string lastnames;
 
         public string Username
         {
@@ -47,6 +49,11 @@ namespace SICAR.ViewModels
                         {
                             passwordIsCorrect = false;
                         }
+                        else
+                        {
+                            names = user.names;
+                            lastnames = user.lastnames;
+                        }
                     }
                 }
                 if (usernameFound == false)
@@ -71,23 +78,27 @@ namespace SICAR.ViewModels
 
         private async void OnLoginClicked(object obj)
         {
-            Console.WriteLine(username);
-            Console.WriteLine(password);
+            //Console.WriteLine(username);
+            //Console.WriteLine(password);
             int loginErrorCode = await ValidateLogin();
             if (loginErrorCode == -1)
             {
                 Username = "";
                 Password = "";
                 // TODO: need to save the user info for further user in the application
-                Crop newCrop = new Crop()
+                User newUser = new User()
                 {
-                    user = 1,
-                    name = "Papaya2",
-                    type = "Papaya",
-                    date = "24/04/2000",
-                    hectare = 30
+                    username = username,
+                    password = password,
+                    names = names,
+                    lastnames = lastnames
                 };
-                await App.Database.SaveCropAsync(newCrop);
+                Session newSession = new Session()
+                {
+                    user = newUser,
+                    loginTime = DateTime.Now
+                };
+                await App.Database.SaveSessionAsync(newSession);
                 await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
             }
             else if (loginErrorCode == 0)

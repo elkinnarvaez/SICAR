@@ -94,11 +94,11 @@ namespace SICAR.ViewModels
 
         private async void OnSignUpClicked(object obj)
         {
-            Console.WriteLine(names);
-            Console.WriteLine(lastnames);
-            Console.WriteLine(username);
-            Console.WriteLine(password);
-            Console.WriteLine(retypedPassword);
+            //Console.WriteLine(names);
+            //Console.WriteLine(lastnames);
+            //Console.WriteLine(username);
+            //Console.WriteLine(password);
+            //Console.WriteLine(retypedPassword);
             int signUpErrorCode = await ValidateSignUp();
             if(signUpErrorCode == -1)
             {

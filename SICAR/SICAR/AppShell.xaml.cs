@@ -3,7 +3,7 @@ using SICAR.Views;
 using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using SICAR.Models;
+
 namespace SICAR
 {
     public partial class AppShell : Xamarin.Forms.Shell
