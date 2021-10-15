@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SICAR.Views.AddNewCropsPage"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Content>
+
+        <Grid>
+            <!--<StackLayout Spacing="10" Padding="10" VerticalOptions="Start">
+                <ImageButton CornerRadius="5" Source="https://ibb.co/mXtKNjX" Command="{Binding }"></ImageButton>
+                <Button Text="Iniciar sesión" TextColor="White" BackgroundColor="#2828DC" Command="{Binding LoginCommand}"></Button>
+            </StackLayout>-->
+            <ScrollView>
+                <StackLayout Spacing="20" Padding="50" VerticalOptions="Center">
+                    <Label HorizontalOptions="Center" FontSize="30" Text="Nuevo Cultivo 🌱"></Label>
+                    <Picker x:Name="Crops"
+                            Title="Selecciona un Cultivo"
+                            TitleColor="Black"
+                            SelectedItem="{Binding TypeCrop, Mode=TwoWay}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Caña de Azúcar</x:String>
+                                <x:String>Manzana</x:String>
+                                <x:String>Uva</x:String>
+                                <x:String>Algodón</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <!--<Label HorizontalOptions="Center"  FontSize="30" VerticalOptions="CenterAndExpand" Text="Nombre"></Label>-->
+                    <Entry x:Name="nameEntry" Text="{Binding NameCrop, Mode=TwoWay}" Placeholder="Nombre de Cultivo" ></Entry>
+                    <Label HorizontalOptions="Start" FontSize="20" Text="Fecha de Incio del Cultivo: "></Label>
+                    <DatePicker x:Name="initialDateCultivo"
+                    Format="D"
+                    Date="{Binding SelectedDate}"
+                    HorizontalOptions="Start"/>
+
+                    <Entry x:Name="hectaresEntry" Keyboard="Numeric" Text="{Binding HectaresCrop, Mode=TwoWay}" Placeholder="Cantidad de hectareas"></Entry>
+                    <Button Text="Agregar" TextColor="White" BackgroundColor="#3B4859" Command="{Binding AddNewCropCommand}"></Button>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+        
+    </ContentPage.Content>
+</ContentPage>
