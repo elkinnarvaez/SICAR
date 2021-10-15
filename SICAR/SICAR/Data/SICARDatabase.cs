@@ -16,8 +16,10 @@ namespace SICAR.Data
             database = new SQLiteAsyncConnection(dbPath);
             database.CreateTableAsync<User>().Wait();
             database.CreateTableAsync<Crop>().Wait();
+            database.CreateTableAsync<Session>().Wait();
         }
 
+        // User methods
         public Task<List<User>> GetUsersAsync()
         {
             //Get all users.
@@ -52,25 +54,22 @@ namespace SICAR.Data
             return database.DeleteAsync(user);
         }
 
-
-
-        //For Crops
-
+        // Crops methods
         public Task<List<Crop>> GetAllCropsAsync()
         {
+            // Get all crops
             return database.Table<Crop>().ToListAsync();
         }
         public Task<List<Crop>> GetCropsOfUserAsync(int userId)
         {
-            //Get all Crops.
-            
+            // Get crops of user
             return database.Table<Crop>()
                             .Where(i => i.user == userId).ToListAsync();
         }
 
         public Task<Crop> GetCropAsync(int id)
         {
-            // Get a specific Crop.
+            // Get a specific crop.
             return database.Table<Crop>()
                             .Where(i => i.id == id)
                             .FirstOrDefaultAsync();
@@ -94,6 +93,33 @@ namespace SICAR.Data
         {
             // Delete a crop.
             return database.DeleteAsync(crop);
+        }
+
+        // Session methods
+        public Task<Session> GetCurrentSessionAsync()
+        {
+            //Get current session.
+            return database.Table<Session>().FirstOrDefaultAsync();
+        }
+
+        public Task<int> SaveSessionAsync(Session session)
+        {
+            if (session.id != 0)
+            {
+                // Update an existing session.
+                return database.UpdateAsync(session);
+            }
+            else
+            {
+                // Save a new session.
+                return database.InsertAsync(session);
+            }
+        }
+
+        public Task<int> DeleteSessionAsync(Session session)
+        {
+            // Delete a session.
+            return database.DeleteAsync(session);
         }
     }
 }
