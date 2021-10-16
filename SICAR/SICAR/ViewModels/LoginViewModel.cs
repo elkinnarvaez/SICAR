@@ -83,8 +83,6 @@ namespace SICAR.ViewModels
             int loginErrorCode = await ValidateLogin();
             if (loginErrorCode == -1)
             {
-                Username = "";
-                Password = "";
                 // TODO: need to save the user info for further user in the application
                 Session newSession = new Session()
                 {
@@ -95,6 +93,8 @@ namespace SICAR.ViewModels
                     loginTime = DateTime.Now
                 };
                 await App.Database.SaveSessionAsync(newSession);
+                Username = "";
+                Password = "";
                 await Shell.Current.GoToAsync($"//{nameof(AboutPage)}"); //Se debe de cambiar para que vaya a la página de mis cultivos
             }
             else if (loginErrorCode == 0)

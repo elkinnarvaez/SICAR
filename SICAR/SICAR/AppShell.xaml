@@ -116,6 +116,18 @@
     <MenuItem Text="Logout" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
     </MenuItem>
 
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid>
+                <StackLayout Grid.Row="0" BackgroundColor="White" VerticalOptions="End">
+                    <Label Text="{Binding Names, Mode=TwoWay}"></Label>
+                    <Label Text="{Binding Lastnames, Mode=TwoWay}"></Label>
+                    <Label Text="{Binding Username, Mode=TwoWay}"></Label>
+                </StackLayout>
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+   
     <!-- Optional Templates 
     // These may be provided inline as below or as separate classes.
 
