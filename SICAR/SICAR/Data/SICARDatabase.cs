@@ -97,30 +97,30 @@ namespace SICAR.Data
         }
 
         // Session methods
-        //public Task<Session> GetCurrentSessionAsync()
-        //{
-        //    //Get current session.
-        //    return database.Table<Session>().FirstOrDefaultAsync();
-        //}
+        public Task<Session> GetCurrentSessionAsync()
+        {
+            //Get current session.
+            return database.Table<Session>().FirstOrDefaultAsync();
+        }
 
-        //public Task<int> SaveSessionAsync(Session session)
-        //{
-        //    if (session.id != 0)
-        //    {
-        //        // Update an existing session.
-        //        return database.UpdateAsync(session);
-        //    }
-        //    else
-        //    {
-        //        // Save a new session.
-        //        return database.InsertAsync(session);
-        //    }
-        //}
+        public Task<int> SaveSessionAsync(Session session)
+        {
+            if (session.id != 0)
+            {
+                // Update an existing session.
+                return database.UpdateAsync(session);
+            }
+            else
+            {
+                // Save a new session.
+                return database.InsertAsync(session);
+            }
+        }
 
-        //public Task<int> DeleteSessionAsync(Session session)
-        //{
-        //    // Delete a session.
-        //    return database.DeleteAsync(session);
-        //}
+        public Task<int> DeleteSessionAsync(Session session)
+        {
+            // Delete a session.
+            return database.DeleteAsync(session);
+        }
     }
 }

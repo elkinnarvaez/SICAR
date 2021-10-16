@@ -86,19 +86,15 @@ namespace SICAR.ViewModels
                 Username = "";
                 Password = "";
                 // TODO: need to save the user info for further user in the application
-                User newUser = new User()
+                Session newSession = new Session()
                 {
                     username = username,
                     password = password,
                     names = names,
-                    lastnames = lastnames
+                    lastnames = lastnames,
+                    loginTime = DateTime.Now
                 };
-                //Session newSession = new Session()
-                //{
-                //    user = newUser,
-                //    loginTime = DateTime.Now
-                //};
-                //await App.Database.SaveSessionAsync(newSession);
+                await App.Database.SaveSessionAsync(newSession);
                 await Shell.Current.GoToAsync($"//{nameof(AboutPage)}"); //Se debe de cambiar para que vaya a la página de mis cultivos
             }
             else if (loginErrorCode == 0)

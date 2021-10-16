@@ -89,6 +89,7 @@ namespace SICAR.ViewModels
 
         public AddNewCropsViewModel()
         {
+            Title = "Agregar cultivo";
             AddNewCropsCommand = new Command(OnAddNewCropsClicked);
         }
     }

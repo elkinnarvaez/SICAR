@@ -2,9 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SICAR.Views.AddNewCropsPage"
-             Shell.NavBarIsVisible="False">
+             xmlns:vm="clr-namespace:SICAR.ViewModels"
+             Title="{Binding Title}">
+    
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+    
     <ContentPage.Content>
-
         <Grid>
             <!--<StackLayout Spacing="10" Padding="10" VerticalOptions="Start">
                 <ImageButton CornerRadius="5" Source="https://ibb.co/mXtKNjX" Command="{Binding }"></ImageButton>
