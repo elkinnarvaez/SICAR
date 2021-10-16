@@ -93,12 +93,12 @@ namespace SICAR.ViewModels
                     names = names,
                     lastnames = lastnames
                 };
-                Session newSession = new Session()
-                {
-                    user = newUser,
-                    loginTime = DateTime.Now
-                };
-                await App.Database.SaveSessionAsync(newSession);
+                //Session newSession = new Session()
+                //{
+                //    user = newUser,
+                //    loginTime = DateTime.Now
+                //};
+                //await App.Database.SaveSessionAsync(newSession);
                 await Shell.Current.GoToAsync($"//{nameof(AboutPage)}"); //Se debe de cambiar para que vaya a la página de mis cultivos
             }
             else if (loginErrorCode == 0)

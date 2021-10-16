@@ -60,11 +60,12 @@ namespace SICAR.Data
             // Get all crops
             return database.Table<Crop>().ToListAsync();
         }
-        public Task<List<Crop>> GetCropsOfUserAsync(string userId)
+
+        public Task<List<Crop>> GetCropsOfUserAsync(string username)
         {
             // Get crops of user
             return database.Table<Crop>()
-                            .Where(i => i.user == userId).ToListAsync();
+                            .Where(i => i.user == username).ToListAsync();
         }
 
         public Task<Crop> GetCropAsync(int id)

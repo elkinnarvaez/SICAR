@@ -30,8 +30,8 @@ namespace SICAR
             InitializeComponent();
 
             // DependencyService.Register<MockDataStore>();
-            //MainPage = new AddNewCropsPage();
             MainPage = new AppShell();
+            //MainPage = new AddNewCropsPage();
             // MainPage = new list_crops();
             // MainPage = new SignUpPage();
         }

@@ -17,11 +17,6 @@ namespace SICAR
 
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {
-            //List<Crop> crops = await App.Database.GetAllCropsAsync();
-            //foreach (Crop crop in crops)
-            //{
-            //    Console.WriteLine(crop.name);
-            //}
             await Shell.Current.GoToAsync("//LoginPage");
         }
     }
