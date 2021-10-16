@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SICAR.Views.CropsUserPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Spacing="20" Padding="50" VerticalOptions="Center">
+                <ListView>
+                    <ListView.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Cultivo 1</x:String>
+                            <x:String>Cultivo 2</x:String>
+                            <x:String>Cultivo 3</x:String>
+                        </x:Array>
+                    </ListView.ItemsSource>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Button Text="{Binding}" Command="{Binding Command}"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!--Boton para agregar nuevos cultivos-->
+                <Button HorizontalOptions="End" VerticalOptions="End" CornerRadius="5" Background="https://ibb.co/H40cgYp"></Button>
+            </StackLayout>
+        </ScrollView>
+        
+    </ContentPage.Content>
+</ContentPage>
