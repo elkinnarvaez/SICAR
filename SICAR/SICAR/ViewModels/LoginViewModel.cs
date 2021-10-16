@@ -111,8 +111,25 @@ namespace SICAR.ViewModels
             }
         }
 
+        private async void verifyExistingSession()
+        {
+            Session session = await App.Database.GetCurrentSessionAsync();
+            if(session != null)
+            {
+                if(DateTime.Now.Subtract(session.loginTime).Days <= 10)
+                {
+                    await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+                }
+                else
+                {
+                    await App.Database.DeleteSessionAsync(session);
+                }
+            }
+        }
+
         public LoginViewModel()
         {
+            verifyExistingSession();
             LoginCommand = new Command(OnLoginClicked);
         }
 
