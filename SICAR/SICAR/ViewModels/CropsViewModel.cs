@@ -36,7 +36,7 @@ namespace SICAR.ViewModels
             {
                 Crops.Clear();
                 Session session = await App.Database.GetCurrentSessionAsync();
-                var crops = await App.Database.GetCropsOfUserIEnumerable(session.Username, true);
+                var crops = await App.Database.GetCropsOfUserAsync(session.Username);
                 foreach (var crop in crops)
                 {
                     Crops.Add(crop);

@@ -69,11 +69,6 @@ namespace SICAR.Data
                             .Where(i => i.Username == username).ToListAsync();
         }
 
-        public async Task<IEnumerable<Crop>> GetCropsOfUserIEnumerable(string username, bool forceRefresh = false)
-        {
-            return await Task.FromResult(GetCropsOfUserAsync(username).Result);
-        }
-
         public Task<Crop> GetCropAsync(int id)
         {
             // Get a specific crop.
