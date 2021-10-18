@@ -119,10 +119,33 @@
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
             <Grid>
-                <StackLayout Grid.Row="0" BackgroundColor="White" VerticalOptions="End">
-                    <Label Text="{Binding Names, Mode=TwoWay}"></Label>
-                    <Label Text="{Binding Lastnames, Mode=TwoWay}"></Label>
-                    <Label Text="{Binding Username, Mode=TwoWay}"></Label>
+                <StackLayout Margin="0,30,0,30">
+                    <FlexLayout Direction="Row" AlignItems="Center">
+                        <Frame CornerRadius="100" HeightRequest="80" WidthRequest="80" HorizontalOptions="Center" Padding="0" IsClippedToBounds="True" Margin="20,0,0,0">
+                            <Image Source="user_logo3.png" 
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Frame>
+                        <StackLayout VerticalOptions="Center" Spacing="3" Margin="20,0,0,0">
+                            <Label FontAttributes="Bold" FontSize="20" WidthRequest="200">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding Names, Mode=TwoWay}" />
+                                        <Span Text=" " />
+                                        <Span Text="{Binding Lastnames, Mode=TwoWay}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label TextColor="#a5a2a2" FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="" />
+                                        <Span Text="{Binding Username, Mode=TwoWay}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                    </FlexLayout>
                 </StackLayout>
             </Grid>
         </DataTemplate>

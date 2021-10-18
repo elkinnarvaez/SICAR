@@ -5,11 +5,17 @@ using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using Xamarin.Forms;
 using SICAR.Models;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace SICAR
 {
     public partial class AppShell : Xamarin.Forms.Shell
     {
+        private string names;
+        private string lastnames;
+        private string username;
+
         private bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName] string propertyName = "",
             Action onChanged = null)
@@ -22,10 +28,6 @@ namespace SICAR
             OnPropertyChanged(propertyName);
             return true;
         }
-
-        private string names;
-        private string lastnames;
-        private string username;
 
         public string Names
         {
@@ -45,19 +47,19 @@ namespace SICAR
             set => SetProperty(ref username, value);
         }
 
-        public AppShell()
-        {
-            InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
-            getUserInSession();
-            this.BindingContext = this;
-        }
-
-        public async void getUserInSession()
+        private async void OnMenuItemClicked(object sender, EventArgs e)
         {
             Session session = await App.Database.GetCurrentSessionAsync();
-            if(session != null)
+            await App.Database.DeleteSessionAsync(session);
+            await Shell.Current.GoToAsync("//LoginPage");
+        }
+
+        public Task<int> TestFunction { get; }
+
+        public async void GetUserInSession()
+        {
+            Session session = await App.Database.GetCurrentSessionAsync();
+            if (session != null)
             {
                 Names = session.names;
                 Lastnames = session.lastnames;
@@ -65,11 +67,19 @@ namespace SICAR
             }
         }
 
-        private async void OnMenuItemClicked(object sender, EventArgs e)
+        public AppShell()
         {
-            Session session = await App.Database.GetCurrentSessionAsync();
-            await App.Database.DeleteSessionAsync(session);
-            await Shell.Current.GoToAsync("//LoginPage");
+            InitializeComponent();
+            this.BindingContext = this;
+            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
+            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
+            //GetUserInSession();
+            var startTimeSpan = TimeSpan.Zero;
+            var periodTimeSpan = TimeSpan.FromSeconds(0.01);
+            var timer = new System.Threading.Timer((e) =>
+            {
+                GetUserInSession();
+            }, null, startTimeSpan, periodTimeSpan);
         }
     }
 }
