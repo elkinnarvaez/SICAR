@@ -11,6 +11,7 @@ namespace SICAR.ViewModels
     public class CropsViewModel : BaseViewModel
     {
         private Crop _selectedCrop;
+        private bool emptyCropsList;
 
         public ObservableCollection<Crop> Crops { get; }
         public Command LoadCropsCommand { get; }
@@ -37,6 +38,14 @@ namespace SICAR.ViewModels
                 Crops.Clear();
                 Session session = await App.Database.GetCurrentSessionAsync();
                 var crops = await App.Database.GetCropsOfUserAsync(session.Username);
+                if (crops.Count == 0)
+                {
+                    EmptyCropsList = true;
+                }
+                else
+                {
+                    EmptyCropsList = false;
+                }
                 foreach (var crop in crops)
                 {
                     Crops.Add(crop);
@@ -81,6 +90,12 @@ namespace SICAR.ViewModels
             // This will push the CropDetailPage onto the navigation stack
             // await Shell.Current.GoToAsync($"{nameof(CropDetailPage)}?{nameof(CropDetailViewModel.CropId)}={crop.id}");
             await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+        }
+
+        public bool EmptyCropsList
+        {
+            get => emptyCropsList;
+            set => SetProperty(ref emptyCropsList, value);
         }
     }
 }

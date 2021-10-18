@@ -6,37 +6,48 @@
              xmlns:local="clr-namespace:SICAR.ViewModels"  
              xmlns:model="clr-namespace:SICAR.Models"
              x:Name="BrowseCropsPage">
-    
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Agregar" Command="{Binding AddCropCommand}" />
     </ContentPage.ToolbarItems>
 
-
     <RefreshView x:DataType="local:CropsViewModel" Command="{Binding LoadCropsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="CropsListView"
+        <Grid>
+            <Grid>
+                <FlexLayout Direction="Column" AlignItems="Center" JustifyContent="Center" IsVisible="{Binding EmptyCropsList, Mode=TwoWay}">
+                    <Image Source="empty.png" WidthRequest="350" />
+                    <Label FontAttributes="Bold" TextColor="Black" FontSize="20" Text="Lista de cultivos" Margin="0,0,0,10" />
+                    <Label TextColor="#a5a2a2" FontSize="16" Text="No hay cultivos para mostrar por el momento" />
+                </FlexLayout>
+                <CollectionView x:Name="CropsListView"
                 ItemsSource="{Binding Crops}"
                 SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Crop">
-                        <Label Text="{Binding Name}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16" />
-                        <Label Text="{Binding Type}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
-                            FontSize="13" />
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:CropsViewModel}}, Path=CropTapped}"		
-                                CommandParameter="{Binding .}">
-                            </TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="10" x:DataType="model:Crop">
+                                <Label Text="{Binding Name}" 
+                        LineBreakMode="NoWrap"
+                        Style="{DynamicResource ListItemTextStyle}" 
+                        FontSize="16" />
+                                <Label Text="{Binding Type}" 
+                        LineBreakMode="NoWrap"
+                        Style="{DynamicResource ListItemDetailTextStyle}"
+                        FontSize="13" />
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                            NumberOfTapsRequired="1"
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:CropsViewModel}}, Path=CropTapped}"		
+                            CommandParameter="{Binding .}">
+                                    </TapGestureRecognizer>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+            <AbsoluteLayout WidthRequest="60" HeightRequest="60" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,16,16">
+                <ImageButton CornerRadius="30" Source="add2.png" BackgroundColor="white" Command="{Binding AddCropCommand}"></ImageButton>
+            </AbsoluteLayout>
+        </Grid>
     </RefreshView>
 </ContentPage>
