@@ -89,7 +89,7 @@ namespace SICAR.ViewModels
 
             // This will push the CropDetailPage onto the navigation stack
             // await Shell.Current.GoToAsync($"{nameof(CropDetailPage)}?{nameof(CropDetailViewModel.CropId)}={crop.id}");
-            await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+            await Shell.Current.GoToAsync(nameof(CropDetailPage));
         }
 
         public bool EmptyCropsList

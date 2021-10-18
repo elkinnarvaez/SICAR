@@ -71,6 +71,7 @@ namespace SICAR
             this.BindingContext = this;
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
+            Routing.RegisterRoute(nameof(CropDetailPage), typeof(CropDetailPage));
             Routing.RegisterRoute(nameof(NewCropPage), typeof(NewCropPage));
             //GetUserInSession();
             var startTimeSpan = TimeSpan.Zero;
