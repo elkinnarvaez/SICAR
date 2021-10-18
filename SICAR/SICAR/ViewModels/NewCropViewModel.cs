@@ -12,7 +12,7 @@ using Xamarin.Forms.Xaml;
 
 namespace SICAR.ViewModels
 {
-    public class AddNewCropsViewModel : BaseViewModel
+    public class NewCropViewModel : BaseViewModel
     {
         private string type;
         private string name;
@@ -87,7 +87,7 @@ namespace SICAR.ViewModels
             }
         }
 
-        public AddNewCropsViewModel()
+        public NewCropViewModel()
         {
             Title = "Agregar cultivo";
             AddNewCropsCommand = new Command(OnAddNewCropsClicked);

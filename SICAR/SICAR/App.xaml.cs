@@ -29,7 +29,7 @@ namespace SICAR
         {
             InitializeComponent();
 
-            // DependencyService.Register<MockDataStore>();
+            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
             //MainPage = new AddNewCropsPage();
             // MainPage = new list_crops();

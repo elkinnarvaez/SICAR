@@ -9,9 +9,14 @@ using Xamarin.Essentials;
 using SICAR.Models;
 using System.Threading.Tasks;
 using Xamarin.Forms.Xaml;
+
 namespace SICAR.ViewModels
 {
-    public class CropsUserViewModel : BaseViewModel
+    public class CropsViewModel : BaseViewModel
     {
+        public CropsViewModel()
+        {
+
+        }
     }
 }

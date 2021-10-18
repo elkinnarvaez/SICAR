@@ -4,19 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace SICAR.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CropsUserPage : ContentPage
+    public partial class CropsPage : ContentPage
     {
-        public CropsUserPage()
+        public CropsPage()
         {
             InitializeComponent();
-            this.BindingContext = new CropsUserPage();
+            this.BindingContext = new CropsViewModel();
         }
     }
 }

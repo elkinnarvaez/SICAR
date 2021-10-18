@@ -94,20 +94,21 @@
         FlyoutDisplayOptions="AsMultipleItems" will create a separate flyout item for each child element    
         https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
     -->
+
+    <FlyoutItem Title="Mis cultivos" Icon="crop_icon.png">
+        <!-- https://ibb.co/m4xgdSw -->
+        <ShellContent Route="CropsPage" ContentTemplate="{DataTemplate local:CropsPage}"/>
+    </FlyoutItem>
+
+    <!--Este se deberia de quitar una vez se implemente lo del boton-->
+    <FlyoutItem Title="Nuevo Cultivo" Icon="crop_icon.png">
+        <ShellContent Route="NewCropPage" ContentTemplate="{DataTemplate local:NewCropPage}"/>
+    </FlyoutItem>
+    
     <FlyoutItem Title="About" Icon="icon_about.png">
         <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
     </FlyoutItem>
-    
-    <!--Este se deberia de quitar una vez se implemente lo del boton-->
-    <FlyoutItem Title="NuevoCultivo" Icon="icon_about.png">
-        <ShellContent Route="AddNewCropsPage" ContentTemplate="{DataTemplate local:AddNewCropsPage}"/>
-    </FlyoutItem>
 
-    <FlyoutItem Title="MisCultivos" Icon="icon_about.png">
-        <!-- https://ibb.co/m4xgdSw -->
-        <ShellContent Route="CropsUserPage" ContentTemplate="{DataTemplate local:CropsUserPage}"/>
-    </FlyoutItem>
-    
     <FlyoutItem Title="Browse" Icon="icon_feed.png">
         <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
     </FlyoutItem>

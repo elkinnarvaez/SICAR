@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SICAR.Views.AddNewCropsPage"
+             x:Class="SICAR.Views.NewCropPage"
              xmlns:vm="clr-namespace:SICAR.ViewModels"
              Title="{Binding Title}">
     
@@ -17,9 +17,9 @@
             </StackLayout>-->
             <ScrollView>
                 <StackLayout Spacing="20" Padding="50" VerticalOptions="Center">
-                    <Label HorizontalOptions="Center" FontSize="30" Text="Nuevo Cultivo 🌱"></Label>
+                    <Label HorizontalOptions="Center" FontSize="30" Text="Agregar cultivo 🌱" Margin="0, 0, 0, 20"></Label>
                     <Picker x:Name="Crops"
-                            Title="Selecciona un Cultivo"
+                            Title="Selecciona un cultivo"
                             TitleColor="Black"
                             SelectedItem="{Binding Type, Mode=TwoWay}">
                         <Picker.ItemsSource>
@@ -32,14 +32,15 @@
                         </Picker.ItemsSource>
                     </Picker>
                     <!--<Label HorizontalOptions="Center"  FontSize="30" VerticalOptions="CenterAndExpand" Text="Nombre"></Label>-->
-                    <Entry x:Name="nameEntry" Text="{Binding Name, Mode=TwoWay}" Placeholder="Nombre de Cultivo" ></Entry>
-                    <Label HorizontalOptions="Start" FontSize="20" Text="Fecha de Incio del Cultivo: "></Label>
-                    <DatePicker x:Name="initialDateCultivo"
-                    Format="D"
-                    Date="{Binding Date}"
-                    HorizontalOptions="Start"/>
-
+                    <Entry x:Name="nameEntry" Text="{Binding Name, Mode=TwoWay}" Placeholder="Nombre del cultivo" ></Entry>
                     <Entry x:Name="hectaresEntry" Keyboard="Numeric" Text="{Binding Hectare, Mode=TwoWay}" Placeholder="Cantidad de hectareas"></Entry>
+                    <!--<Label HorizontalOptions="Start" FontSize="20" Text="Fecha de Incio del Cultivo: "></Label>-->
+                    <Label Text="Fecha de inicio:" Margin="5, 0, 0, 0" FontSize="17"></Label>
+                    <DatePicker x:Name="initialDateCultivo"
+                                Format="D"
+                                Date="{Binding Date}"
+                                Margin="30, 0, 0, 10"
+                                HorizontalOptions="Start"/>
                     <Button Text="Agregar" TextColor="White" BackgroundColor="#3B4859" Command="{Binding AddNewCropsCommand}"></Button>
                 </StackLayout>
             </ScrollView>
