@@ -42,17 +42,17 @@ namespace SICAR.ViewModels
                 bool passwordIsCorrect = true;
                 foreach (User user in users)
                 {
-                    if (user.username == username)
+                    if (user.Username == username)
                     {
                         usernameFound = true;
-                        if (user.password != password)
+                        if (user.Password != password)
                         {
                             passwordIsCorrect = false;
                         }
                         else
                         {
-                            names = user.names;
-                            lastnames = user.lastnames;
+                            names = user.Names;
+                            lastnames = user.Lastnames;
                         }
                     }
                 }
@@ -86,16 +86,16 @@ namespace SICAR.ViewModels
                 // TODO: need to save the user info for further user in the application
                 Session newSession = new Session()
                 {
-                    username = username,
-                    password = password,
-                    names = names,
-                    lastnames = lastnames,
-                    loginTime = DateTime.Now
+                    Username = username,
+                    Password = password,
+                    Names = names,
+                    Lastnames = lastnames,
+                    LoginTime = DateTime.Now
                 };
                 await App.Database.SaveSessionAsync(newSession);
                 Username = "";
                 Password = "";
-                await Shell.Current.GoToAsync($"//{nameof(AboutPage)}"); //Se debe de cambiar para que vaya a la página de mis cultivos
+                await Shell.Current.GoToAsync($"//{nameof(CropsPage)}");
             }
             else if (loginErrorCode == 0)
             {
@@ -116,9 +116,9 @@ namespace SICAR.ViewModels
             Session session = await App.Database.GetCurrentSessionAsync();
             if(session != null)
             {
-                if(DateTime.Now.Subtract(session.loginTime).Days <= 10)
+                if(DateTime.Now.Subtract(session.LoginTime).Days <= 10)
                 {
-                    await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+                    await Shell.Current.GoToAsync($"//{nameof(CropsPage)}");
                 }
                 else
                 {

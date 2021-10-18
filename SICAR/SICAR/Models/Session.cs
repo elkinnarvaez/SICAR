@@ -6,13 +6,13 @@ namespace SICAR.Models
     public class Session
     {
         [PrimaryKey, AutoIncrement]
-        public int id { get; set; }
+        public int Id { get; set; }
         // User info
-        public int userId { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public string names { get; set; }
-        public string lastnames { get; set; }
-        public DateTime loginTime { get; set; }
+        public int UserId { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Names { get; set; }
+        public string Lastnames { get; set; }
+        public DateTime LoginTime { get; set; }
     }
 }

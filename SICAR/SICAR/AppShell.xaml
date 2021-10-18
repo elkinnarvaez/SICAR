@@ -100,14 +100,13 @@
         <ShellContent Route="CropsPage" ContentTemplate="{DataTemplate local:CropsPage}"/>
     </FlyoutItem>
 
-    <!--Este se deberia de quitar una vez se implemente lo del boton-->
-    <FlyoutItem Title="Nuevo Cultivo" Icon="crop_icon.png">
+    <!--<FlyoutItem Title="Nuevo Cultivo" Icon="crop_icon.png">
         <ShellContent Route="NewCropPage" ContentTemplate="{DataTemplate local:NewCropPage}"/>
-    </FlyoutItem>
+    </FlyoutItem>-->
     
-    <FlyoutItem Title="About" Icon="icon_about.png">
+    <!--<FlyoutItem Title="About" Icon="icon_about.png">
         <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-    </FlyoutItem>
+    </FlyoutItem>-->
 
     <FlyoutItem Title="Browse" Icon="icon_feed.png">
         <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />

@@ -8,15 +8,15 @@ namespace SICAR.Models
     public class Crop
     {
         [PrimaryKey, AutoIncrement]
-        public int id { get; set; }
-        public string user { get; set; }
-        public string name { get; set; }
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public string Name { get; set; }
 
-        public string type { get; set; }
+        public string Type { get; set; }
 
-        public string date { get; set; }
+        public string Date { get; set; }
 
-        public int hectare { get; set; }
+        public int Hectare { get; set; }
 
     }
 }

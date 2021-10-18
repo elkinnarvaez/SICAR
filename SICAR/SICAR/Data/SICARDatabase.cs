@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite;
 using SICAR.Models;
+using System.Linq;
 
 namespace SICAR.Data
 {
@@ -30,13 +31,13 @@ namespace SICAR.Data
         {
             // Get a specific user.
             return database.Table<User>()
-                            .Where(i => i.id == id)
+                            .Where(i => i.Id == id)
                             .FirstOrDefaultAsync();
         }
 
         public Task<int> SaveUserAsync(User user)
         {
-            if (user.id != 0)
+            if (user.Id != 0)
             {
                 // Update an existing user.
                 return database.UpdateAsync(user);
@@ -65,20 +66,25 @@ namespace SICAR.Data
         {
             // Get crops of user
             return database.Table<Crop>()
-                            .Where(i => i.user == username).ToListAsync();
+                            .Where(i => i.Username == username).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Crop>> GetCropsOfUserIEnumerable(string username, bool forceRefresh = false)
+        {
+            return await Task.FromResult(GetCropsOfUserAsync(username).Result);
         }
 
         public Task<Crop> GetCropAsync(int id)
         {
             // Get a specific crop.
             return database.Table<Crop>()
-                            .Where(i => i.id == id)
+                            .Where(i => i.Id == id)
                             .FirstOrDefaultAsync();
         }
 
         public Task<int> SaveCropAsync(Crop crop)
         {
-            if (crop.id != 0)
+            if (crop.Id != 0)
             {
                 // Update an existing crop.
                 return database.UpdateAsync(crop);
@@ -105,7 +111,7 @@ namespace SICAR.Data
 
         public Task<int> SaveSessionAsync(Session session)
         {
-            if (session.id != 0)
+            if (session.Id != 0)
             {
                 // Update an existing session.
                 return database.UpdateAsync(session);

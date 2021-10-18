@@ -2,8 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SICAR.Views.NewCropPage"
-             xmlns:vm="clr-namespace:SICAR.ViewModels"
-             Title="{Binding Title}">
+             Shell.PresentationMode="ModalAnimated"
+             Title="{Binding Title}"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             xmlns:vm="clr-namespace:SICAR.ViewModels">
     
     <ContentPage.BindingContext>
         <vm:AboutViewModel />
@@ -41,7 +44,7 @@
                                 Date="{Binding Date}"
                                 Margin="30, 0, 0, 10"
                                 HorizontalOptions="Start"/>
-                    <Button Text="Agregar" TextColor="White" BackgroundColor="#3B4859" Command="{Binding AddNewCropsCommand}"></Button>
+                    <Button Text="Agregar" TextColor="White" BackgroundColor="#3B4859" Command="{Binding AddNewCropCommand}"></Button>
                 </StackLayout>
             </ScrollView>
         </Grid>

@@ -6,10 +6,10 @@ namespace SICAR.Models
     public class User
     {
         [PrimaryKey, AutoIncrement]
-        public int id { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public string names { get; set; }
-        public string lastnames { get; set; }
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Names { get; set; }
+        public string Lastnames { get; set; }
     }
 }

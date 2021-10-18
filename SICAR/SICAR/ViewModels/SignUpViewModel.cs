@@ -63,7 +63,7 @@ namespace SICAR.ViewModels
                 bool usernameFound = false;
                 foreach(User user in users)
                 {
-                    if(user.username == username)
+                    if(user.Username == username)
                     {
                         usernameFound = true;
                     }
@@ -104,10 +104,10 @@ namespace SICAR.ViewModels
             {
                 User newUser = new User()
                 {
-                    username = username,
-                    password = password,
-                    names = names,
-                    lastnames = lastnames
+                    Username = username,
+                    Password = password,
+                    Names = names,
+                    Lastnames = lastnames
                 };
                 await App.Database.SaveUserAsync(newUser);
                 Names = "";

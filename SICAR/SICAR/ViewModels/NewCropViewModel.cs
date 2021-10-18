@@ -1,14 +1,9 @@
-﻿using SICAR.Views;
+﻿using SICAR.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Xamarin.Forms;
 using System.Windows.Input;
-using Xamarin.Essentials;
-using SICAR.Models;
-using System.Threading.Tasks;
-using Xamarin.Forms.Xaml;
+using Xamarin.Forms;
 
 namespace SICAR.ViewModels
 {
@@ -16,7 +11,7 @@ namespace SICAR.ViewModels
     {
         private string type;
         private string name;
-        private string user;
+        private string username;
         private string date;
         private string hectare;
 
@@ -44,9 +39,15 @@ namespace SICAR.ViewModels
             set => SetProperty(ref hectare, value);
         }
 
-        public Command AddNewCropsCommand { get; }
+        public string Username
+        {
+            get => username;
+            set => SetProperty(ref username, value);
+        }
 
-        private async Task<int> ValidateNewCrop()
+        public Command AddNewCropCommand { get; }
+
+        private int ValidateNewCrop()
         {
             int newCropErrorCode;
             if(!String.IsNullOrWhiteSpace(name) && !String.IsNullOrWhiteSpace(type) && !String.IsNullOrWhiteSpace(date) && !String.IsNullOrWhiteSpace(hectare))
@@ -60,26 +61,27 @@ namespace SICAR.ViewModels
             return newCropErrorCode;
         }
 
-        private async void OnAddNewCropsClicked(object obj)
+        private async void OnAddNewCropClicked(object obj)
         {
-            int newCropErrorCode = await ValidateNewCrop();
+            int newCropErrorCode = ValidateNewCrop();
             if (newCropErrorCode == -1)
             {
+                Session session = await App.Database.GetCurrentSessionAsync();
                 Crop newCrop = new Crop()
                 {
-                    name = name,
-                    type = type,
-                    user = "pruebas",
-                    date = date,
-                    hectare = Int32.Parse(hectare)
+                    Name = name,
+                    Type = type,
+                    Username = session.Username,
+                    Date = date,
+                    Hectare = Int32.Parse(hectare)
                 };
                 await App.Database.SaveCropAsync(newCrop);
-                name = "";
-                type = "";
-                user = "";
-                date = "";
-                hectare = "";
-                await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");
+                Name = "";
+                Type = "";
+                Username = "";
+                Date = "";
+                Hectare = "";
+                await Shell.Current.GoToAsync("..");
             }
             else if(newCropErrorCode == 0)
             {
@@ -89,8 +91,10 @@ namespace SICAR.ViewModels
 
         public NewCropViewModel()
         {
-            Title = "Agregar cultivo";
-            AddNewCropsCommand = new Command(OnAddNewCropsClicked);
+            Title = "Nuevo Cultivo";
+            AddNewCropCommand = new Command(OnAddNewCropClicked);
+            this.PropertyChanged +=
+                (_, __) => AddNewCropCommand.ChangeCanExecute();
         }
     }
 }

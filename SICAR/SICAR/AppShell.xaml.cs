@@ -54,16 +54,14 @@ namespace SICAR
             await Shell.Current.GoToAsync("//LoginPage");
         }
 
-        public Task<int> TestFunction { get; }
-
         public async void GetUserInSession()
         {
             Session session = await App.Database.GetCurrentSessionAsync();
             if (session != null)
             {
-                Names = session.names;
-                Lastnames = session.lastnames;
-                Username = session.username;
+                Names = session.Names;
+                Lastnames = session.Lastnames;
+                Username = session.Username;
             }
         }
 
@@ -73,6 +71,7 @@ namespace SICAR
             this.BindingContext = this;
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
+            Routing.RegisterRoute(nameof(NewCropPage), typeof(NewCropPage));
             //GetUserInSession();
             var startTimeSpan = TimeSpan.Zero;
             var periodTimeSpan = TimeSpan.FromSeconds(0.01);
