@@ -118,7 +118,7 @@
 
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
-            <Grid>
+            <StackLayout>
                 <StackLayout Margin="0,30,0,30">
                     <FlexLayout Direction="Row" AlignItems="Center">
                         <Frame CornerRadius="100" HeightRequest="80" WidthRequest="80" HorizontalOptions="Center" Padding="0" IsClippedToBounds="True" Margin="20,0,0,0">
@@ -147,9 +147,22 @@
                         </StackLayout>
                     </FlexLayout>
                 </StackLayout>
-            </Grid>
+            </StackLayout>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
+
+    <Shell.FlyoutFooterTemplate>
+        <DataTemplate>
+            <StackLayout>
+                <StackLayout BackgroundColor="Green" IsVisible="{Binding ActiveInternetConnection}">
+                    <Label Text="Conexión a internet" HorizontalOptions="Center" TextColor="white"/>
+                </StackLayout>
+                <StackLayout BackgroundColor="Red" IsVisible="{Binding UnactiveInternetConnection}">
+                    <Label Text="No tienes conexión a internet" HorizontalOptions="Center" TextColor="white"/>
+                </StackLayout>
+            </StackLayout>
+        </DataTemplate>
+    </Shell.FlyoutFooterTemplate>
    
     <!-- Optional Templates 
     // These may be provided inline as below or as separate classes.

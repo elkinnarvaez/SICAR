@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using SICAR.Models;
 using System.Threading.Tasks;
 using System.Threading;
+using Xamarin.Essentials;
 
 namespace SICAR
 {
@@ -15,6 +16,8 @@ namespace SICAR
         private string names;
         private string lastnames;
         private string username;
+        private bool activeInternetConnection;
+        private bool unactiveInternetConnection;
 
         private bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName] string propertyName = "",
@@ -47,6 +50,18 @@ namespace SICAR
             set => SetProperty(ref username, value);
         }
 
+        public bool ActiveInternetConnection
+        {
+            get => activeInternetConnection;
+            set => SetProperty(ref activeInternetConnection, value);
+        }
+
+        public bool UnactiveInternetConnection
+        {
+            get => unactiveInternetConnection;
+            set => SetProperty(ref unactiveInternetConnection, value);
+        }
+
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {
             Session session = await App.Database.GetCurrentSessionAsync();
@@ -65,6 +80,21 @@ namespace SICAR
             }
         }
 
+        public void checkInternetConnection()
+        {
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
+            {
+                ActiveInternetConnection = true;
+                UnactiveInternetConnection = false;
+            }
+            else
+            {
+                ActiveInternetConnection = false;
+                UnactiveInternetConnection = true;
+            }
+        }
+
         public AppShell()
         {
             InitializeComponent();
@@ -79,6 +109,7 @@ namespace SICAR
             var timer = new System.Threading.Timer((e) =>
             {
                 GetUserInSession();
+                checkInternetConnection();
             }, null, startTimeSpan, periodTimeSpan);
         }
     }
