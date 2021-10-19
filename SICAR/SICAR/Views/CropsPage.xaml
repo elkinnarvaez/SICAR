@@ -20,8 +20,9 @@
                     <Label TextColor="#a5a2a2" FontSize="16" Text="No hay cultivos para mostrar por el momento" />
                 </FlexLayout>
                 <CollectionView x:Name="CropsListView"
-                ItemsSource="{Binding Crops}"
-                SelectionMode="None">
+                                ItemsSource="{Binding Crops}"
+                                SelectionMode="None"
+                                Margin="10">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Padding="10" x:DataType="model:Crop">

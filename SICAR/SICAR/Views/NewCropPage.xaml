@@ -23,7 +23,6 @@
                     <Label HorizontalOptions="Center" FontSize="30" Text="Agregar cultivo 🌱" Margin="0, 0, 0, 20"></Label>
                     <Picker x:Name="Crops"
                             Title="Selecciona un cultivo"
-                            TitleColor="Black"
                             SelectedItem="{Binding Type, Mode=TwoWay}">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
