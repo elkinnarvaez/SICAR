@@ -46,6 +46,7 @@ namespace SICAR.ViewModels
         }
 
         public Command AddNewCropCommand { get; }
+        public Command CancelCommand { get; }
 
         private int ValidateNewCrop()
         {
@@ -89,10 +90,17 @@ namespace SICAR.ViewModels
             }
         }
 
+        private async void OnCancel()
+        {
+            // This will pop the current page off the navigation stack
+            await Shell.Current.GoToAsync("..");
+        }
+
         public NewCropViewModel()
         {
             Title = "Nuevo Cultivo";
             AddNewCropCommand = new Command(OnAddNewCropClicked);
+            CancelCommand = new Command(OnCancel);
             this.PropertyChanged +=
                 (_, __) => AddNewCropCommand.ChangeCanExecute();
         }

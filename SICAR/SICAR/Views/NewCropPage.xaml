@@ -45,6 +45,7 @@
                                 Margin="30, 0, 0, 10"
                                 HorizontalOptions="Start"/>
                     <Button Text="Agregar" TextColor="White" BackgroundColor="#3B4859" Command="{Binding AddNewCropCommand}"></Button>
+                    <Button Text="Cancelar" TextColor="White" BackgroundColor="#3B4859" Command="{Binding CancelCommand}"></Button>
                 </StackLayout>
             </ScrollView>
         </Grid>
