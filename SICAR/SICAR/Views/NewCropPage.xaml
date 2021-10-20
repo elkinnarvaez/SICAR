@@ -34,7 +34,7 @@
                         </Picker.ItemsSource>
                     </Picker>
                     <!--<Label HorizontalOptions="Center"  FontSize="30" VerticalOptions="CenterAndExpand" Text="Nombre"></Label>-->
-                    <Entry x:Name="nameEntry" Text="{Binding Name, Mode=TwoWay}" Placeholder="Nombre del cultivo" ></Entry>
+                    <Entry x:Name="nameEntry" Text="{Binding Name, Mode=TwoWay}" Placeholder="Nombre del cultivo"></Entry>
                     <Entry x:Name="hectaresEntry" Keyboard="Numeric" Text="{Binding Hectare, Mode=TwoWay}" Placeholder="Cantidad de hectareas"></Entry>
                     <!--<Label HorizontalOptions="Start" FontSize="20" Text="Fecha de Incio del Cultivo: "></Label>-->
                     <Label Text="Fecha de inicio:" Margin="5, 0, 0, 0" FontSize="17"></Label>
