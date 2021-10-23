@@ -14,6 +14,8 @@ namespace SICAR.ViewModels
         private string username;
         private string date;
         private string hectare;
+        private string ground;
+        private string deep;
 
 
         public string Type
@@ -45,13 +47,25 @@ namespace SICAR.ViewModels
             set => SetProperty(ref username, value);
         }
 
+        public string Ground
+        {
+            get => ground;
+            set => SetProperty(ref ground, value);
+        }
+
+        public string Deep
+        {
+            get => deep;
+            set => SetProperty(ref deep, value);
+        }
+
         public Command AddNewCropCommand { get; }
         public Command CancelCommand { get; }
 
         private int ValidateNewCrop()
         {
             int newCropErrorCode;
-            if(!String.IsNullOrWhiteSpace(name) && !String.IsNullOrWhiteSpace(type) && !String.IsNullOrWhiteSpace(date) && !String.IsNullOrWhiteSpace(hectare))
+            if(!String.IsNullOrWhiteSpace(name) && !String.IsNullOrWhiteSpace(type) && !String.IsNullOrWhiteSpace(date) && !String.IsNullOrWhiteSpace(hectare) && !String.IsNullOrWhiteSpace(ground) && !String.IsNullOrWhiteSpace(deep))
             {
                 newCropErrorCode = -1;
             }
@@ -74,7 +88,9 @@ namespace SICAR.ViewModels
                     Type = type,
                     Username = session.Username,
                     Date = date,
-                    Hectare = Int32.Parse(hectare)
+                    Hectare = Int32.Parse(hectare),
+                    Ground = ground,
+                    Deep = Int32.Parse(deep)
                 };
                 await App.Database.SaveCropAsync(newCrop);
                 Name = "";
@@ -82,6 +98,8 @@ namespace SICAR.ViewModels
                 Username = "";
                 Date = "";
                 Hectare = "";
+                Ground = "";
+                Deep = "";
                 await Shell.Current.GoToAsync("..");
             }
             else if(newCropErrorCode == 0)

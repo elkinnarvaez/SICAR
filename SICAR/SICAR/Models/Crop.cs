@@ -18,5 +18,9 @@ namespace SICAR.Models
 
         public int Hectare { get; set; }
 
+        public string Ground { get; set; }
+
+        public int Deep { get; set; }
+
     }
 }
