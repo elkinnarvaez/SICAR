@@ -33,8 +33,23 @@
                             </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
-                    <!--<Label HorizontalOptions="Center"  FontSize="30" VerticalOptions="CenterAndExpand" Text="Nombre"></Label>-->
                     <Entry x:Name="nameEntry" Text="{Binding Name, Mode=TwoWay}" Placeholder="Nombre del cultivo"></Entry>
+                    <!--<Label HorizontalOptions="Center"  FontSize="30" VerticalOptions="CenterAndExpand" Text="Nombre"></Label>-->
+                    <Picker x:Name="Ground"
+                            Title="Selecciona un tipo de Suelo"
+                            SelectedItem="{Binding Ground, Mode=TwoWay}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Arenoso</x:String>
+                                <x:String>Franco</x:String>
+                                <x:String>Franco Arenoso</x:String>
+                                <x:String>Arcilloso</x:String>
+                                <x:String>Franco Arcilloso</x:String>
+                                <x:String>Arcilloso Arenoso</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                    <Entry x:Name="deepEntry" Keyboard="Numeric" Text="{Binding Deep, Mode=TwoWay}" Placeholder="Profundidad de Raices"></Entry>
                     <Entry x:Name="hectaresEntry" Keyboard="Numeric" Text="{Binding Hectare, Mode=TwoWay}" Placeholder="Cantidad de hectareas"></Entry>
                     <!--<Label HorizontalOptions="Start" FontSize="20" Text="Fecha de Incio del Cultivo: "></Label>-->
                     <Label Text="Fecha de inicio:" Margin="5, 0, 0, 0" FontSize="17"></Label>
@@ -43,6 +58,7 @@
                                 Date="{Binding Date}"
                                 Margin="30, 0, 0, 10"
                                 HorizontalOptions="Start"/>
+                    
                     <Button Text="Agregar" TextColor="White" BackgroundColor="#3B4859" Command="{Binding AddNewCropCommand}"></Button>
                     <Button Text="Cancelar" TextColor="White" BackgroundColor="#3B4859" Command="{Binding CancelCommand}"></Button>
                 </StackLayout>
