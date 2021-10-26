@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+    
+    
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SICAR.Views.NewCropPage"
              Shell.PresentationMode="ModalAnimated"
@@ -49,13 +52,14 @@
                             </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
-                    <Entry x:Name="deepEntry" Keyboard="Numeric" Text="{Binding Deep, Mode=TwoWay}" Placeholder="Profundidad de Raices"></Entry>
+                    <Entry x:Name="deepEntry" Keyboard="Numeric" Text="{Binding Deep, Mode=TwoWay}" Placeholder="Profundidad de Raices(centimetros)"></Entry>
                     <Entry x:Name="hectaresEntry" Keyboard="Numeric" Text="{Binding Hectare, Mode=TwoWay}" Placeholder="Cantidad de hectareas"></Entry>
                     <!--<Label HorizontalOptions="Start" FontSize="20" Text="Fecha de Incio del Cultivo: "></Label>-->
                     <Label Text="Fecha de inicio:" Margin="5, 0, 0, 0" FontSize="17"></Label>
                     <DatePicker x:Name="initialDateCultivo"
                                 Format="D"
                                 Date="{Binding Date}"
+                                MaximumDate="{x:Static sys:DateTime.Now}"
                                 Margin="30, 0, 0, 10"
                                 HorizontalOptions="Start"/>
                     
