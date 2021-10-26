@@ -103,6 +103,7 @@ namespace SICAR
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(CropDetailPage), typeof(CropDetailPage));
             Routing.RegisterRoute(nameof(NewCropPage), typeof(NewCropPage));
+            Routing.RegisterRoute(nameof(UserProfilePage), typeof(UserProfilePage));
             //GetUserInSession();
             var startTimeSpan = TimeSpan.Zero;
             var periodTimeSpan = TimeSpan.FromSeconds(0.01);
