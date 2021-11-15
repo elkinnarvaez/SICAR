@@ -117,33 +117,8 @@ namespace SICAR
 
         /* Google Drive public methods */
 
-        public void ListFilesOnGoogleDrive()
+        public void ListFilesOnGoogleDrive(DriveService service)
         {
-            // Database folder id: 1iC6xLmqTc1ZhQNg97UWrn2wDKqCNn5PN
-
-            // Copy files to storage
-            System.IO.File.WriteAllText(pathToServiceAccountKeyFile, @"{
-                                                                          'type': 'service_account',
-                                                                          'project_id': 'sicarapp',
-                                                                          'private_key_id': '7424ca320cd49fd02fce604adf0b8b3819632859',
-                                                                          'private_key': '-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDo2o9rlvd2y5E3\nFJ2C45qtKdVjfer1ywNmpLEDb4n6albkPEmreUvigbjwlzn2hdnsrfj8QYv9ePZQ\nq9Rdf4u/rVoVvapLJMbQOgcX55yvZm+NJsxdH7RgamipaaH0a3/THEd8Iv9Ym8H3\nEoCB0S5/MRxEQRHzgEdZaNPsFXsMiT5FKrFU16R/xrWeB/4EqVzupa4OE13EWnQC\n+JqN9mUnCX5chwlju2bt9BVfeTPePCO82pVMsrH/Bnx8frFmX8gr/io6VhRaR8TF\nfGdyHsQcpa5EDAmU7P6Dh3hITbUvbVbl6agUaV+WwHOMaljCf8w8/mSZC/MRohsZ\nbHvIhbRDAgMBAAECggEAZPHS+QZiU0qesm0qd4KqHGWlT1NYF6Qh3k6JOn8RJtEQ\nyDLmkQKthg1MmmhExX1zYupspRbZVFIrHf/PuZTAhaDmC8TEXX0c/0oYpyFOSK+0\nrlFiiQBkluOqab8Uabxslp2M0+DsJ4KmjLClqyF+8b7djS1UVeaHh9gs/wy04lKN\nTcbGd19ggsafzIREbXV+ENDUwsiQZWkrE54rULpgmtxld+LMtdrnUaxqx/5udyLF\nKURfQBnRVqJgvaU2/0oxJvJogDRj0eynyQbmM54UbQiuAbWSP8DtTS9RCe99Qrxb\nkZo6ZbzCl5PfuZ+UkheYIoghEHrIoMNMppjzTY+YUQKBgQD1sfgBMl9UM0ZBesV0\nkmaelaSvP8h/wrrGcLjZJFBu5LbsXK3Jg44jnu9iHUdIrr/AQ+5dEaE9sSzus4EX\nzvMJ5COb/8MBTn1+7Tz+PSiYwWQKawdm78O8eCG2wpru+E8z/ydIPw9NPKJqt6zv\nBxYzc44wY3FBsFNkwqWiXRAtWQKBgQDynrZ72pW5rSXv41H0XAhE4dALakWcx2Rm\n5ORaR0HzSt1Um5E7QaE+6AL5oKtOJxqaWLbM2ONcdT8naBK0vGJwsG9FexLFttxp\n7Q5WUzUnLK4ARl/eM8d+FxHUSf+We/GvMA2jzPYoxHAp0HdTrVYhw8lJTDaVjzni\nkqotsPVu+wKBgQCfWHUIEatR6I9AGGfHWsvDPjo4jp1yftCzspev/KVNxnf8g38S\nmoetAn8umt6IfQ1PnL8TDUQNxsLlbPXkgwuM9rFBk3bdehJaJ3LPUMrrh0FioFeE\noyvHKAJ1jXD+W3zCtFC9wmgiJ5kOrWEzBN2ZMPCe4V+qwrjTOIpD6yd6wQKBgQC7\nD1WBHqHr+6zRTQHmFoMloLkH5BLx8uXdU0Mgu+oES8dkMWGDP3G0D6wjjRYm9o1T\nTWz7eYmqwpdDqcEqaki3u8C+4Eoz+G3umaBBPHwxzQgHHDtUFbYM6HqNo9QU0VEh\nEjqh/SgZfINCKgGmmXFcLRjnk4ROQZSOtSfSfKpuuwKBgQDpI/c41ZSeVyYwnc3+\nSMAfNhxrN5jM/q0Ezz7/0MSlm5IyhGDrOsxDIQHwrBkgi8OAzlH1XSI/bvkCsIwq\n1Q6uRGlBaC0XKlbf99U1UCZzThNBNwkppjW1tIjQvrmlnDRdy7jKNrPISsjXI1T2\nzozuELkFvKP/47ZT/nX9gTc7XA==\n-----END PRIVATE KEY-----\n',
-                                                                          'client_email': 'sicarapp-service-account@sicarapp.iam.gserviceaccount.com',
-                                                                          'client_id': '115271374977398663227',
-                                                                          'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
-                                                                          'token_uri': 'https://oauth2.googleapis.com/token',
-                                                                          'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',
-                                                                          'client_x509_cert_url': 'https://www.googleapis.com/robot/v1/metadata/x509/sicarapp-service-account%40sicarapp.iam.gserviceaccount.com'
-                                                                        }");
-
-            // Load the Service account credentials and define the scope of its access
-            var credential = GoogleCredential.FromFile(pathToServiceAccountKeyFile).CreateScoped(DriveService.ScopeConstants.Drive);
-
-            // Create the Drive service
-            var service = new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential
-            });
-
             // Define parameters of request.
             FilesResource.ListRequest listRequest = service.Files.List();
             listRequest.PageSize = 10;
@@ -167,37 +142,12 @@ namespace SICAR
             Console.Read();
         }
 
-        public void DeleteAllFilesOnGoogleDrive()
+        public void DeleteAllFilesOnGoogleDrive(DriveService service)
         {
-            // Copy files to storage
-            System.IO.File.WriteAllText(pathToServiceAccountKeyFile, @"{
-                                                                          'type': 'service_account',
-                                                                          'project_id': 'sicarapp',
-                                                                          'private_key_id': '7424ca320cd49fd02fce604adf0b8b3819632859',
-                                                                          'private_key': '-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDo2o9rlvd2y5E3\nFJ2C45qtKdVjfer1ywNmpLEDb4n6albkPEmreUvigbjwlzn2hdnsrfj8QYv9ePZQ\nq9Rdf4u/rVoVvapLJMbQOgcX55yvZm+NJsxdH7RgamipaaH0a3/THEd8Iv9Ym8H3\nEoCB0S5/MRxEQRHzgEdZaNPsFXsMiT5FKrFU16R/xrWeB/4EqVzupa4OE13EWnQC\n+JqN9mUnCX5chwlju2bt9BVfeTPePCO82pVMsrH/Bnx8frFmX8gr/io6VhRaR8TF\nfGdyHsQcpa5EDAmU7P6Dh3hITbUvbVbl6agUaV+WwHOMaljCf8w8/mSZC/MRohsZ\nbHvIhbRDAgMBAAECggEAZPHS+QZiU0qesm0qd4KqHGWlT1NYF6Qh3k6JOn8RJtEQ\nyDLmkQKthg1MmmhExX1zYupspRbZVFIrHf/PuZTAhaDmC8TEXX0c/0oYpyFOSK+0\nrlFiiQBkluOqab8Uabxslp2M0+DsJ4KmjLClqyF+8b7djS1UVeaHh9gs/wy04lKN\nTcbGd19ggsafzIREbXV+ENDUwsiQZWkrE54rULpgmtxld+LMtdrnUaxqx/5udyLF\nKURfQBnRVqJgvaU2/0oxJvJogDRj0eynyQbmM54UbQiuAbWSP8DtTS9RCe99Qrxb\nkZo6ZbzCl5PfuZ+UkheYIoghEHrIoMNMppjzTY+YUQKBgQD1sfgBMl9UM0ZBesV0\nkmaelaSvP8h/wrrGcLjZJFBu5LbsXK3Jg44jnu9iHUdIrr/AQ+5dEaE9sSzus4EX\nzvMJ5COb/8MBTn1+7Tz+PSiYwWQKawdm78O8eCG2wpru+E8z/ydIPw9NPKJqt6zv\nBxYzc44wY3FBsFNkwqWiXRAtWQKBgQDynrZ72pW5rSXv41H0XAhE4dALakWcx2Rm\n5ORaR0HzSt1Um5E7QaE+6AL5oKtOJxqaWLbM2ONcdT8naBK0vGJwsG9FexLFttxp\n7Q5WUzUnLK4ARl/eM8d+FxHUSf+We/GvMA2jzPYoxHAp0HdTrVYhw8lJTDaVjzni\nkqotsPVu+wKBgQCfWHUIEatR6I9AGGfHWsvDPjo4jp1yftCzspev/KVNxnf8g38S\nmoetAn8umt6IfQ1PnL8TDUQNxsLlbPXkgwuM9rFBk3bdehJaJ3LPUMrrh0FioFeE\noyvHKAJ1jXD+W3zCtFC9wmgiJ5kOrWEzBN2ZMPCe4V+qwrjTOIpD6yd6wQKBgQC7\nD1WBHqHr+6zRTQHmFoMloLkH5BLx8uXdU0Mgu+oES8dkMWGDP3G0D6wjjRYm9o1T\nTWz7eYmqwpdDqcEqaki3u8C+4Eoz+G3umaBBPHwxzQgHHDtUFbYM6HqNo9QU0VEh\nEjqh/SgZfINCKgGmmXFcLRjnk4ROQZSOtSfSfKpuuwKBgQDpI/c41ZSeVyYwnc3+\nSMAfNhxrN5jM/q0Ezz7/0MSlm5IyhGDrOsxDIQHwrBkgi8OAzlH1XSI/bvkCsIwq\n1Q6uRGlBaC0XKlbf99U1UCZzThNBNwkppjW1tIjQvrmlnDRdy7jKNrPISsjXI1T2\nzozuELkFvKP/47ZT/nX9gTc7XA==\n-----END PRIVATE KEY-----\n',
-                                                                          'client_email': 'sicarapp-service-account@sicarapp.iam.gserviceaccount.com',
-                                                                          'client_id': '115271374977398663227',
-                                                                          'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
-                                                                          'token_uri': 'https://oauth2.googleapis.com/token',
-                                                                          'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',
-                                                                          'client_x509_cert_url': 'https://www.googleapis.com/robot/v1/metadata/x509/sicarapp-service-account%40sicarapp.iam.gserviceaccount.com'
-                                                                        }");
-
-            // Load the Service account credentials and define the scope of its access
-            var credential = GoogleCredential.FromFile(pathToServiceAccountKeyFile).CreateScoped(DriveService.ScopeConstants.Drive);
-
-            // Create the Drive service
-            var service = new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential
-            });
-
             // Define parameters of request.
             FilesResource.ListRequest listRequest = service.Files.List();
-            listRequest.PageSize = 10;
-            listRequest.Fields = "nextPageToken, files(id, name)";
 
-            // List files.
+            // Delete files.
             IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
                 .Files;
             Console.WriteLine("Files deleted:");
@@ -219,31 +169,8 @@ namespace SICAR
             Console.Read();
         }
 
-        public void DeleteFileOnGoogleDrive(string fileId)
+        public void DeleteFileOnGoogleDrive(DriveService service, string fileId)
         {
-            // Copy files to storage
-            System.IO.File.WriteAllText(pathToServiceAccountKeyFile, @"{
-                                                                          'type': 'service_account',
-                                                                          'project_id': 'sicarapp',
-                                                                          'private_key_id': '7424ca320cd49fd02fce604adf0b8b3819632859',
-                                                                          'private_key': '-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDo2o9rlvd2y5E3\nFJ2C45qtKdVjfer1ywNmpLEDb4n6albkPEmreUvigbjwlzn2hdnsrfj8QYv9ePZQ\nq9Rdf4u/rVoVvapLJMbQOgcX55yvZm+NJsxdH7RgamipaaH0a3/THEd8Iv9Ym8H3\nEoCB0S5/MRxEQRHzgEdZaNPsFXsMiT5FKrFU16R/xrWeB/4EqVzupa4OE13EWnQC\n+JqN9mUnCX5chwlju2bt9BVfeTPePCO82pVMsrH/Bnx8frFmX8gr/io6VhRaR8TF\nfGdyHsQcpa5EDAmU7P6Dh3hITbUvbVbl6agUaV+WwHOMaljCf8w8/mSZC/MRohsZ\nbHvIhbRDAgMBAAECggEAZPHS+QZiU0qesm0qd4KqHGWlT1NYF6Qh3k6JOn8RJtEQ\nyDLmkQKthg1MmmhExX1zYupspRbZVFIrHf/PuZTAhaDmC8TEXX0c/0oYpyFOSK+0\nrlFiiQBkluOqab8Uabxslp2M0+DsJ4KmjLClqyF+8b7djS1UVeaHh9gs/wy04lKN\nTcbGd19ggsafzIREbXV+ENDUwsiQZWkrE54rULpgmtxld+LMtdrnUaxqx/5udyLF\nKURfQBnRVqJgvaU2/0oxJvJogDRj0eynyQbmM54UbQiuAbWSP8DtTS9RCe99Qrxb\nkZo6ZbzCl5PfuZ+UkheYIoghEHrIoMNMppjzTY+YUQKBgQD1sfgBMl9UM0ZBesV0\nkmaelaSvP8h/wrrGcLjZJFBu5LbsXK3Jg44jnu9iHUdIrr/AQ+5dEaE9sSzus4EX\nzvMJ5COb/8MBTn1+7Tz+PSiYwWQKawdm78O8eCG2wpru+E8z/ydIPw9NPKJqt6zv\nBxYzc44wY3FBsFNkwqWiXRAtWQKBgQDynrZ72pW5rSXv41H0XAhE4dALakWcx2Rm\n5ORaR0HzSt1Um5E7QaE+6AL5oKtOJxqaWLbM2ONcdT8naBK0vGJwsG9FexLFttxp\n7Q5WUzUnLK4ARl/eM8d+FxHUSf+We/GvMA2jzPYoxHAp0HdTrVYhw8lJTDaVjzni\nkqotsPVu+wKBgQCfWHUIEatR6I9AGGfHWsvDPjo4jp1yftCzspev/KVNxnf8g38S\nmoetAn8umt6IfQ1PnL8TDUQNxsLlbPXkgwuM9rFBk3bdehJaJ3LPUMrrh0FioFeE\noyvHKAJ1jXD+W3zCtFC9wmgiJ5kOrWEzBN2ZMPCe4V+qwrjTOIpD6yd6wQKBgQC7\nD1WBHqHr+6zRTQHmFoMloLkH5BLx8uXdU0Mgu+oES8dkMWGDP3G0D6wjjRYm9o1T\nTWz7eYmqwpdDqcEqaki3u8C+4Eoz+G3umaBBPHwxzQgHHDtUFbYM6HqNo9QU0VEh\nEjqh/SgZfINCKgGmmXFcLRjnk4ROQZSOtSfSfKpuuwKBgQDpI/c41ZSeVyYwnc3+\nSMAfNhxrN5jM/q0Ezz7/0MSlm5IyhGDrOsxDIQHwrBkgi8OAzlH1XSI/bvkCsIwq\n1Q6uRGlBaC0XKlbf99U1UCZzThNBNwkppjW1tIjQvrmlnDRdy7jKNrPISsjXI1T2\nzozuELkFvKP/47ZT/nX9gTc7XA==\n-----END PRIVATE KEY-----\n',
-                                                                          'client_email': 'sicarapp-service-account@sicarapp.iam.gserviceaccount.com',
-                                                                          'client_id': '115271374977398663227',
-                                                                          'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
-                                                                          'token_uri': 'https://oauth2.googleapis.com/token',
-                                                                          'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',
-                                                                          'client_x509_cert_url': 'https://www.googleapis.com/robot/v1/metadata/x509/sicarapp-service-account%40sicarapp.iam.gserviceaccount.com'
-                                                                        }");
-
-            // Load the Service account credentials and define the scope of its access
-            var credential = GoogleCredential.FromFile(pathToServiceAccountKeyFile).CreateScoped(DriveService.ScopeConstants.Drive);
-
-            // Create the Drive service
-            var service = new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential
-            });
-
             if(fileId != directoryId)
             {
                 var file = service.Files.Get(fileId).Execute();
@@ -256,39 +183,28 @@ namespace SICAR
             }
         }
 
-        public async void UpdateFileOnGoogleDrive(string fileId)
+        public List<string> getLinesFileContentOnGoogleDrive(DriveService service, string fileName)
         {
-            //Copy files to storage
-            System.IO.File.WriteAllText(pathToServiceAccountKeyFile, @"{
-                                                                          'type': 'service_account',
-                                                                          'project_id': 'sicarapp',
-                                                                          'private_key_id': '7424ca320cd49fd02fce604adf0b8b3819632859',
-                                                                          'private_key': '-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDo2o9rlvd2y5E3\nFJ2C45qtKdVjfer1ywNmpLEDb4n6albkPEmreUvigbjwlzn2hdnsrfj8QYv9ePZQ\nq9Rdf4u/rVoVvapLJMbQOgcX55yvZm+NJsxdH7RgamipaaH0a3/THEd8Iv9Ym8H3\nEoCB0S5/MRxEQRHzgEdZaNPsFXsMiT5FKrFU16R/xrWeB/4EqVzupa4OE13EWnQC\n+JqN9mUnCX5chwlju2bt9BVfeTPePCO82pVMsrH/Bnx8frFmX8gr/io6VhRaR8TF\nfGdyHsQcpa5EDAmU7P6Dh3hITbUvbVbl6agUaV+WwHOMaljCf8w8/mSZC/MRohsZ\nbHvIhbRDAgMBAAECggEAZPHS+QZiU0qesm0qd4KqHGWlT1NYF6Qh3k6JOn8RJtEQ\nyDLmkQKthg1MmmhExX1zYupspRbZVFIrHf/PuZTAhaDmC8TEXX0c/0oYpyFOSK+0\nrlFiiQBkluOqab8Uabxslp2M0+DsJ4KmjLClqyF+8b7djS1UVeaHh9gs/wy04lKN\nTcbGd19ggsafzIREbXV+ENDUwsiQZWkrE54rULpgmtxld+LMtdrnUaxqx/5udyLF\nKURfQBnRVqJgvaU2/0oxJvJogDRj0eynyQbmM54UbQiuAbWSP8DtTS9RCe99Qrxb\nkZo6ZbzCl5PfuZ+UkheYIoghEHrIoMNMppjzTY+YUQKBgQD1sfgBMl9UM0ZBesV0\nkmaelaSvP8h/wrrGcLjZJFBu5LbsXK3Jg44jnu9iHUdIrr/AQ+5dEaE9sSzus4EX\nzvMJ5COb/8MBTn1+7Tz+PSiYwWQKawdm78O8eCG2wpru+E8z/ydIPw9NPKJqt6zv\nBxYzc44wY3FBsFNkwqWiXRAtWQKBgQDynrZ72pW5rSXv41H0XAhE4dALakWcx2Rm\n5ORaR0HzSt1Um5E7QaE+6AL5oKtOJxqaWLbM2ONcdT8naBK0vGJwsG9FexLFttxp\n7Q5WUzUnLK4ARl/eM8d+FxHUSf+We/GvMA2jzPYoxHAp0HdTrVYhw8lJTDaVjzni\nkqotsPVu+wKBgQCfWHUIEatR6I9AGGfHWsvDPjo4jp1yftCzspev/KVNxnf8g38S\nmoetAn8umt6IfQ1PnL8TDUQNxsLlbPXkgwuM9rFBk3bdehJaJ3LPUMrrh0FioFeE\noyvHKAJ1jXD+W3zCtFC9wmgiJ5kOrWEzBN2ZMPCe4V+qwrjTOIpD6yd6wQKBgQC7\nD1WBHqHr+6zRTQHmFoMloLkH5BLx8uXdU0Mgu+oES8dkMWGDP3G0D6wjjRYm9o1T\nTWz7eYmqwpdDqcEqaki3u8C+4Eoz+G3umaBBPHwxzQgHHDtUFbYM6HqNo9QU0VEh\nEjqh/SgZfINCKgGmmXFcLRjnk4ROQZSOtSfSfKpuuwKBgQDpI/c41ZSeVyYwnc3+\nSMAfNhxrN5jM/q0Ezz7/0MSlm5IyhGDrOsxDIQHwrBkgi8OAzlH1XSI/bvkCsIwq\n1Q6uRGlBaC0XKlbf99U1UCZzThNBNwkppjW1tIjQvrmlnDRdy7jKNrPISsjXI1T2\nzozuELkFvKP/47ZT/nX9gTc7XA==\n-----END PRIVATE KEY-----\n',
-                                                                          'client_email': 'sicarapp-service-account@sicarapp.iam.gserviceaccount.com',
-                                                                          'client_id': '115271374977398663227',
-                                                                          'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
-                                                                          'token_uri': 'https://oauth2.googleapis.com/token',
-                                                                          'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',
-                                                                          'client_x509_cert_url': 'https://www.googleapis.com/robot/v1/metadata/x509/sicarapp-service-account%40sicarapp.iam.gserviceaccount.com'
-                                                                        }");
-
-            //Load the Service account credentials and define the scope of its access
-            var credential = GoogleCredential.FromFile(pathToServiceAccountKeyFile).CreateScoped(DriveService.ScopeConstants.Drive);
-
-            //Create the Drive service
-            var service = new DriveService(new BaseClientService.Initializer()
+            // Get fileId by file name (it is assumed that the files names are unique)
+            string fileId = "";
+            FilesResource.ListRequest listRequest = service.Files.List();
+            IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
+                .Files;
+            foreach (var f in files)
             {
-                HttpClientInitializer = credential
-            });
+                if (f.Name == fileName)
+                {
+                    fileId = f.Id;
+                }
+            }
 
-            //Download file content to storage
-            System.IO.File.WriteAllText(pathToDownloadedFile, @""); // Create file where the content will be downloaded
+            // Download file content to storage
             var fileContent = new FileStream(pathToDownloadedFile, FileMode.Open, FileAccess.Write);
             service.Files.Get(fileId).Download(fileContent);
             fileContent.Close();
 
-            //Read content from file (as lines)
-            List<String> lines = new List<String>();
+            // Read content from file
+            List<String> linesFileContent = new List<String>();
             using (StreamReader sr = System.IO.File.OpenText(pathToDownloadedFile))
             {
                 String line = "";
@@ -296,12 +212,28 @@ namespace SICAR
                 while ((line = sr.ReadLine()) != null)
                 {
                     //Console.WriteLine(line);
-                    lines.Add(line);
+                    linesFileContent.Add(line);
+                }
+            }
+            return linesFileContent;
+        }
+
+        public async void UpdateFileOnGoogleDrive(DriveService service, string fileName, string newFileContent)
+        {
+            // Get fileId by file name (it is assumed that the files names are unique)
+            string fileId = "";
+            FilesResource.ListRequest listRequest = service.Files.List();
+            IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
+                .Files;
+            foreach (var f in files)
+            {
+                if (f.Name == fileName)
+                {
+                    fileId = f.Id;
                 }
             }
 
-            //Create modified content
-            string newFileContent = lines[0] + Environment.NewLine + lines[1] + Environment.NewLine + "This is new" + "This is new again";
+            // Create modified content
             System.IO.File.WriteAllText(pathToUploadFile, newFileContent);
 
             //Upload file content
@@ -318,37 +250,15 @@ namespace SICAR
             }
         }
 
-        public async void UploadFileToGoogleDrive()
+        public async void UploadFileToGoogleDrive(DriveService service, string fileContent, string fileName)
         {
-            // Copy files to storage
-            System.IO.File.WriteAllText(pathToServiceAccountKeyFile, @"{
-                                                                          'type': 'service_account',
-                                                                          'project_id': 'sicarapp',
-                                                                          'private_key_id': '7424ca320cd49fd02fce604adf0b8b3819632859',
-                                                                          'private_key': '-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDo2o9rlvd2y5E3\nFJ2C45qtKdVjfer1ywNmpLEDb4n6albkPEmreUvigbjwlzn2hdnsrfj8QYv9ePZQ\nq9Rdf4u/rVoVvapLJMbQOgcX55yvZm+NJsxdH7RgamipaaH0a3/THEd8Iv9Ym8H3\nEoCB0S5/MRxEQRHzgEdZaNPsFXsMiT5FKrFU16R/xrWeB/4EqVzupa4OE13EWnQC\n+JqN9mUnCX5chwlju2bt9BVfeTPePCO82pVMsrH/Bnx8frFmX8gr/io6VhRaR8TF\nfGdyHsQcpa5EDAmU7P6Dh3hITbUvbVbl6agUaV+WwHOMaljCf8w8/mSZC/MRohsZ\nbHvIhbRDAgMBAAECggEAZPHS+QZiU0qesm0qd4KqHGWlT1NYF6Qh3k6JOn8RJtEQ\nyDLmkQKthg1MmmhExX1zYupspRbZVFIrHf/PuZTAhaDmC8TEXX0c/0oYpyFOSK+0\nrlFiiQBkluOqab8Uabxslp2M0+DsJ4KmjLClqyF+8b7djS1UVeaHh9gs/wy04lKN\nTcbGd19ggsafzIREbXV+ENDUwsiQZWkrE54rULpgmtxld+LMtdrnUaxqx/5udyLF\nKURfQBnRVqJgvaU2/0oxJvJogDRj0eynyQbmM54UbQiuAbWSP8DtTS9RCe99Qrxb\nkZo6ZbzCl5PfuZ+UkheYIoghEHrIoMNMppjzTY+YUQKBgQD1sfgBMl9UM0ZBesV0\nkmaelaSvP8h/wrrGcLjZJFBu5LbsXK3Jg44jnu9iHUdIrr/AQ+5dEaE9sSzus4EX\nzvMJ5COb/8MBTn1+7Tz+PSiYwWQKawdm78O8eCG2wpru+E8z/ydIPw9NPKJqt6zv\nBxYzc44wY3FBsFNkwqWiXRAtWQKBgQDynrZ72pW5rSXv41H0XAhE4dALakWcx2Rm\n5ORaR0HzSt1Um5E7QaE+6AL5oKtOJxqaWLbM2ONcdT8naBK0vGJwsG9FexLFttxp\n7Q5WUzUnLK4ARl/eM8d+FxHUSf+We/GvMA2jzPYoxHAp0HdTrVYhw8lJTDaVjzni\nkqotsPVu+wKBgQCfWHUIEatR6I9AGGfHWsvDPjo4jp1yftCzspev/KVNxnf8g38S\nmoetAn8umt6IfQ1PnL8TDUQNxsLlbPXkgwuM9rFBk3bdehJaJ3LPUMrrh0FioFeE\noyvHKAJ1jXD+W3zCtFC9wmgiJ5kOrWEzBN2ZMPCe4V+qwrjTOIpD6yd6wQKBgQC7\nD1WBHqHr+6zRTQHmFoMloLkH5BLx8uXdU0Mgu+oES8dkMWGDP3G0D6wjjRYm9o1T\nTWz7eYmqwpdDqcEqaki3u8C+4Eoz+G3umaBBPHwxzQgHHDtUFbYM6HqNo9QU0VEh\nEjqh/SgZfINCKgGmmXFcLRjnk4ROQZSOtSfSfKpuuwKBgQDpI/c41ZSeVyYwnc3+\nSMAfNhxrN5jM/q0Ezz7/0MSlm5IyhGDrOsxDIQHwrBkgi8OAzlH1XSI/bvkCsIwq\n1Q6uRGlBaC0XKlbf99U1UCZzThNBNwkppjW1tIjQvrmlnDRdy7jKNrPISsjXI1T2\nzozuELkFvKP/47ZT/nX9gTc7XA==\n-----END PRIVATE KEY-----\n',
-                                                                          'client_email': 'sicarapp-service-account@sicarapp.iam.gserviceaccount.com',
-                                                                          'client_id': '115271374977398663227',
-                                                                          'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
-                                                                          'token_uri': 'https://oauth2.googleapis.com/token',
-                                                                          'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',
-                                                                          'client_x509_cert_url': 'https://www.googleapis.com/robot/v1/metadata/x509/sicarapp-service-account%40sicarapp.iam.gserviceaccount.com'
-                                                                        }");
-
-            System.IO.File.WriteAllText(pathToUploadFile, String.Format("Este es un archivo de prueba{0}Esta es otra linea", Environment.NewLine));
-
-            // Load the Service account credentials and define the scope of its access
-            var credential = GoogleCredential.FromFile(pathToServiceAccountKeyFile).CreateScoped(DriveService.ScopeConstants.Drive);
-
-            // Create the Drive service
-            var service = new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential
-            });
+            // Create file content
+            System.IO.File.WriteAllText(pathToUploadFile, fileContent);
 
             // Upload file Metadata
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
-                Name = "upload.txt",
+                Name = fileName,
                 Parents = new List<string>() {directoryId}
             };
 
@@ -378,12 +288,41 @@ namespace SICAR
             Routing.RegisterRoute(nameof(CropDetailPage), typeof(CropDetailPage));
             Routing.RegisterRoute(nameof(NewCropPage), typeof(NewCropPage));
             Routing.RegisterRoute(nameof(UserProfilePage), typeof(UserProfilePage));
-            //ListFilesOnGoogleDrive();
-            //DeleteAllFilesOnGoogleDrive();
-            //DeleteFileOnGoogleDrive(fileId);
-            //UpdateFileOnGoogleDrive("18PqD6sxnFe9g-HYVU--hjxVITfBCGqhP");
-            //UploadFileToGoogleDrive();
-            //GetUserInSession();
+
+            /* ----------- Google Drive Initialization ----------- */
+
+            // Copy files to storage
+            System.IO.File.WriteAllText(pathToServiceAccountKeyFile, @"{
+                                                                          'type': 'service_account',
+                                                                          'project_id': 'sicarapp',
+                                                                          'private_key_id': '7424ca320cd49fd02fce604adf0b8b3819632859',
+                                                                          'private_key': '-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDo2o9rlvd2y5E3\nFJ2C45qtKdVjfer1ywNmpLEDb4n6albkPEmreUvigbjwlzn2hdnsrfj8QYv9ePZQ\nq9Rdf4u/rVoVvapLJMbQOgcX55yvZm+NJsxdH7RgamipaaH0a3/THEd8Iv9Ym8H3\nEoCB0S5/MRxEQRHzgEdZaNPsFXsMiT5FKrFU16R/xrWeB/4EqVzupa4OE13EWnQC\n+JqN9mUnCX5chwlju2bt9BVfeTPePCO82pVMsrH/Bnx8frFmX8gr/io6VhRaR8TF\nfGdyHsQcpa5EDAmU7P6Dh3hITbUvbVbl6agUaV+WwHOMaljCf8w8/mSZC/MRohsZ\nbHvIhbRDAgMBAAECggEAZPHS+QZiU0qesm0qd4KqHGWlT1NYF6Qh3k6JOn8RJtEQ\nyDLmkQKthg1MmmhExX1zYupspRbZVFIrHf/PuZTAhaDmC8TEXX0c/0oYpyFOSK+0\nrlFiiQBkluOqab8Uabxslp2M0+DsJ4KmjLClqyF+8b7djS1UVeaHh9gs/wy04lKN\nTcbGd19ggsafzIREbXV+ENDUwsiQZWkrE54rULpgmtxld+LMtdrnUaxqx/5udyLF\nKURfQBnRVqJgvaU2/0oxJvJogDRj0eynyQbmM54UbQiuAbWSP8DtTS9RCe99Qrxb\nkZo6ZbzCl5PfuZ+UkheYIoghEHrIoMNMppjzTY+YUQKBgQD1sfgBMl9UM0ZBesV0\nkmaelaSvP8h/wrrGcLjZJFBu5LbsXK3Jg44jnu9iHUdIrr/AQ+5dEaE9sSzus4EX\nzvMJ5COb/8MBTn1+7Tz+PSiYwWQKawdm78O8eCG2wpru+E8z/ydIPw9NPKJqt6zv\nBxYzc44wY3FBsFNkwqWiXRAtWQKBgQDynrZ72pW5rSXv41H0XAhE4dALakWcx2Rm\n5ORaR0HzSt1Um5E7QaE+6AL5oKtOJxqaWLbM2ONcdT8naBK0vGJwsG9FexLFttxp\n7Q5WUzUnLK4ARl/eM8d+FxHUSf+We/GvMA2jzPYoxHAp0HdTrVYhw8lJTDaVjzni\nkqotsPVu+wKBgQCfWHUIEatR6I9AGGfHWsvDPjo4jp1yftCzspev/KVNxnf8g38S\nmoetAn8umt6IfQ1PnL8TDUQNxsLlbPXkgwuM9rFBk3bdehJaJ3LPUMrrh0FioFeE\noyvHKAJ1jXD+W3zCtFC9wmgiJ5kOrWEzBN2ZMPCe4V+qwrjTOIpD6yd6wQKBgQC7\nD1WBHqHr+6zRTQHmFoMloLkH5BLx8uXdU0Mgu+oES8dkMWGDP3G0D6wjjRYm9o1T\nTWz7eYmqwpdDqcEqaki3u8C+4Eoz+G3umaBBPHwxzQgHHDtUFbYM6HqNo9QU0VEh\nEjqh/SgZfINCKgGmmXFcLRjnk4ROQZSOtSfSfKpuuwKBgQDpI/c41ZSeVyYwnc3+\nSMAfNhxrN5jM/q0Ezz7/0MSlm5IyhGDrOsxDIQHwrBkgi8OAzlH1XSI/bvkCsIwq\n1Q6uRGlBaC0XKlbf99U1UCZzThNBNwkppjW1tIjQvrmlnDRdy7jKNrPISsjXI1T2\nzozuELkFvKP/47ZT/nX9gTc7XA==\n-----END PRIVATE KEY-----\n',
+                                                                          'client_email': 'sicarapp-service-account@sicarapp.iam.gserviceaccount.com',
+                                                                          'client_id': '115271374977398663227',
+                                                                          'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
+                                                                          'token_uri': 'https://oauth2.googleapis.com/token',
+                                                                          'auth_provider_x509_cert_url': 'https://www.googleapis.com/oauth2/v1/certs',
+                                                                          'client_x509_cert_url': 'https://www.googleapis.com/robot/v1/metadata/x509/sicarapp-service-account%40sicarapp.iam.gserviceaccount.com'
+                                                                        }");
+            System.IO.File.WriteAllText(pathToUploadFile, @"");
+            System.IO.File.WriteAllText(pathToDownloadedFile, @"");
+
+            // Load the Service account credentials and define the scope of its access
+            var credential = GoogleCredential.FromFile(pathToServiceAccountKeyFile).CreateScoped(DriveService.ScopeConstants.Drive);
+
+            // Create the Drive service
+            var service = new DriveService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential
+            });
+
+            UploadFileToGoogleDrive(service, "", "Crop.txt");
+            UploadFileToGoogleDrive(service, "", "Item.txt");
+            UploadFileToGoogleDrive(service, "", "Session.txt");
+            UploadFileToGoogleDrive(service, "", "User.txt");
+
+            /* --------------------------------------------------- */
+
             var startTimeSpan = TimeSpan.Zero;
             var periodTimeSpan = TimeSpan.FromSeconds(0.01);
             var timer = new System.Threading.Timer((e) =>
