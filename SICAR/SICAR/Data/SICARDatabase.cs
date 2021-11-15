@@ -18,6 +18,8 @@ namespace SICAR.Data
             database.CreateTableAsync<User>().Wait();
             database.CreateTableAsync<Crop>().Wait();
             database.CreateTableAsync<Session>().Wait();
+            database.CreateTableAsync<WeatherStationData>().Wait();
+            database.CreateTableAsync<Sync>().Wait();
         }
 
         // User methods
@@ -122,6 +124,40 @@ namespace SICAR.Data
         {
             // Delete a session.
             return database.DeleteAsync(session);
+        }
+
+        // WeatherStationData methods
+        public Task<List<WeatherStationData>> GetAllWeatherStationData()
+        {
+            // Get all weather station data
+            return database.Table<WeatherStationData>().ToListAsync();
+        }
+
+        // Sync methods
+        public Task<Sync> GetSyncStatusAsync()
+        {
+            //Get current sync.
+            return database.Table<Sync>().FirstOrDefaultAsync();
+        }
+
+        public Task<int> SaveSyncAsync(Sync sync)
+        {
+            if (sync.Id != 0)
+            {
+                // Update an existing sync.
+                return database.UpdateAsync(sync);
+            }
+            else
+            {
+                // Save a new sync.
+                return database.InsertAsync(sync);
+            }
+        }
+
+        public Task<int> DeleteSyncAsync(Sync sync)
+        {
+            // Delete a sync.
+            return database.DeleteAsync(sync);
         }
     }
 }

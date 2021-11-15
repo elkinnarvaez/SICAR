@@ -30,6 +30,7 @@ namespace SICAR
         private string username;
         private bool activeInternetConnection;
         private bool unactiveInternetConnection;
+        private bool isSynced;
 
         // private const string pathToServiceAccountKeyFile = "sicarapp-credentials.json";
         private string pathToServiceAccountKeyFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "sicarapp-credentials.json");
@@ -82,6 +83,12 @@ namespace SICAR
             set => SetProperty(ref unactiveInternetConnection, value);
         }
 
+        public bool IsSynced
+        {
+            get => isSynced;
+            set => SetProperty(ref isSynced, value);
+        }
+
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {
             Session session = await App.Database.GetCurrentSessionAsync();
@@ -100,7 +107,7 @@ namespace SICAR
             }
         }
 
-        public void checkInternetConnection()
+        public void CheckInternetConnection()
         {
             var current = Connectivity.NetworkAccess;
             if (current == NetworkAccess.Internet)
@@ -112,6 +119,42 @@ namespace SICAR
             {
                 ActiveInternetConnection = false;
                 UnactiveInternetConnection = true;
+            }
+        }
+
+        public async void GetSyncStatus()
+        {
+            Sync sync = await App.Database.GetSyncStatusAsync();
+            if(sync != null)
+            {
+                IsSynced = sync.isSynced;
+            }
+            else
+            {
+                Sync newSync = new Sync()
+                {
+                    isSynced = false
+                };
+                await App.Database.SaveSyncAsync(newSync);
+                IsSynced = false;
+            }
+        }
+
+        public async void SyncingProcessWithGoogleDrive(DriveService service)
+        {
+            if(isSynced == false)
+            {
+                if(activeInternetConnection == true)
+                {
+                    List<String> linesCropFile = GetLinesFileContentOnGoogleDrive(service, "Crop.txt");
+                    List<String> linesUserFile = GetLinesFileContentOnGoogleDrive(service, "User.txt");
+                    List<String> linesWeatherStationDataFile = GetLinesFileContentOnGoogleDrive(service, "WeatherStationData.txt");
+                    List<SICAR.Models.Crop> crops = await App.Database.GetAllCropsAsync();
+                    List<SICAR.Models.User> users = await App.Database.GetUsersAsync();
+                    List<SICAR.Models.WeatherStationData> weatherStationData = await App.Database.GetAllWeatherStationData();
+
+                    // Here goes the syncing part
+                }
             }
         }
 
@@ -183,7 +226,7 @@ namespace SICAR
             }
         }
 
-        public List<string> getLinesFileContentOnGoogleDrive(DriveService service, string fileName)
+        public List<string> GetLinesFileContentOnGoogleDrive(DriveService service, string fileName)
         {
             // Get fileId by file name (it is assumed that the files names are unique)
             string fileId = "";
@@ -218,7 +261,7 @@ namespace SICAR
             return linesFileContent;
         }
 
-        public async void UpdateFileOnGoogleDrive(DriveService service, string fileName, string newFileContent)
+        public void UpdateFileOnGoogleDrive(DriveService service, string fileName, string newFileContent)
         {
             // Get fileId by file name (it is assumed that the files names are unique)
             string fileId = "";
@@ -242,7 +285,7 @@ namespace SICAR
             using (var fsSource = new FileStream(pathToUploadFile, FileMode.Open, FileAccess.Read))
             {
                 var request = service.Files.Update(newFileMetadata, file.Id, fsSource, "text/plain");
-                var results = await request.UploadAsync();
+                var results = request.Upload();
                 if (results.Status == Google.Apis.Upload.UploadStatus.Failed)
                 {
                     Console.WriteLine($"Error updating file: {results.Exception.Message}");
@@ -250,7 +293,7 @@ namespace SICAR
             }
         }
 
-        public async void UploadFileToGoogleDrive(DriveService service, string fileContent, string fileName)
+        public void UploadFileToGoogleDrive(DriveService service, string fileContent, string fileName)
         {
             // Create file content
             System.IO.File.WriteAllText(pathToUploadFile, fileContent);
@@ -268,9 +311,9 @@ namespace SICAR
             {
                 // Create a new file, with metadata and stream
                 var request = service.Files.Create(fileMetadata, fsSource, "text/plain");
+                
                 request.Fields = "*";
-                var results = await request.UploadAsync(CancellationToken.None);
-
+                var results = request.Upload();
                 if (results.Status == Google.Apis.Upload.UploadStatus.Failed)
                 {
                     Console.WriteLine($"Error uploading file: {results.Exception.Message}");
@@ -316,11 +359,6 @@ namespace SICAR
                 HttpClientInitializer = credential
             });
 
-            UploadFileToGoogleDrive(service, "", "Crop.txt");
-            UploadFileToGoogleDrive(service, "", "Item.txt");
-            UploadFileToGoogleDrive(service, "", "Session.txt");
-            UploadFileToGoogleDrive(service, "", "User.txt");
-
             /* --------------------------------------------------- */
 
             var startTimeSpan = TimeSpan.Zero;
@@ -328,7 +366,9 @@ namespace SICAR
             var timer = new System.Threading.Timer((e) =>
             {
                 GetUserInSession();
-                checkInternetConnection();
+                CheckInternetConnection();
+                GetSyncStatus();
+                SyncingProcessWithGoogleDrive(service);
             }, null, startTimeSpan, periodTimeSpan);
         }
     }
