@@ -67,7 +67,14 @@ namespace SICAR.ViewModels
             int newCropErrorCode;
             if(!String.IsNullOrWhiteSpace(name) && !String.IsNullOrWhiteSpace(type) && !String.IsNullOrWhiteSpace(date) && !String.IsNullOrWhiteSpace(hectare) && !String.IsNullOrWhiteSpace(ground) && !String.IsNullOrWhiteSpace(deep))
             {
-                newCropErrorCode = -1;
+                if (int.Parse(hectare) <= 0 || int.Parse(deep) <= 0)
+                {
+                    newCropErrorCode = 1;
+                }
+                else
+                {
+                    newCropErrorCode = -1;
+                }
             }
             else
             {
@@ -119,6 +126,10 @@ namespace SICAR.ViewModels
             else if(newCropErrorCode == 0)
             {
                 await Shell.Current.DisplayAlert("Campos en blanco", "Por favor verifique que todos los campos estén llenos.", "OK");
+            }
+            else if(newCropErrorCode == 1)
+            {
+                await Shell.Current.DisplayAlert("Campos incorrectos", "El valor de profundidad y hectareas debe ser mayor a cero.", "OK");
             }
         }
 

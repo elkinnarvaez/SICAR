@@ -133,6 +133,12 @@ namespace SICAR.Data
             return database.Table<WeatherStationData>().ToListAsync();
         }
 
+        public Task<List<WeatherStationData>> GetAllWeatherStationDataFromSpecificDate(string date)
+        {
+            return database.Table<WeatherStationData>()
+                            .Where(i => i.Date == date).ToListAsync();
+        }
+
         public Task<int> DeleteWeatherStationDataAsync(WeatherStationData weatherStationData)
         {
             // Delete a session.

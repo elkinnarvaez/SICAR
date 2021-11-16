@@ -593,6 +593,10 @@ namespace SICAR
 
             /* --------------------------------------------------- */
 
+            //List<string> l = new List<string>();
+            //UpdateFileOnGoogleDrive(service, "Crop.txt", l);
+            //UpdateFileOnGoogleDrive(service, "User.txt", l);
+
             var startTimeSpan = TimeSpan.Zero;
             var periodTimeSpan = TimeSpan.FromSeconds(0.01);
             var timer = new System.Threading.Timer((e) =>

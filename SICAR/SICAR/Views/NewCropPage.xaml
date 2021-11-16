@@ -29,10 +29,16 @@
                             SelectedItem="{Binding Type, Mode=TwoWay}">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
-                                <x:String>Caña de Azúcar</x:String>
-                                <x:String>Manzana</x:String>
-                                <x:String>Uva</x:String>
-                                <x:String>Algodón</x:String>
+                                <x:String>Zanahoria</x:String>
+                                <x:String>Cebolla verde</x:String>
+                                <x:String>Tomate</x:String>
+                                <x:String>Papa</x:String>
+                                <x:String>Frijol verde</x:String>
+                                <x:String>Frijol seco</x:String>
+                                <x:String>Maíz</x:String>
+                                <x:String>Caña de Azúcar (virgen)</x:String>
+                                <x:String>Caña de Azúcar (soca)</x:String>
+                                <x:String>Piña</x:String>
                             </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
