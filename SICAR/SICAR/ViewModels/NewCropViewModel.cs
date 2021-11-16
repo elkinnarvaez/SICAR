@@ -100,6 +100,20 @@ namespace SICAR.ViewModels
                 Hectare = "";
                 Ground = "";
                 Deep = "";
+                Sync sync = await App.Database.GetSyncStatusAsync();
+                if (sync != null)
+                {
+                    sync.isSynced = false;
+                    await App.Database.SaveSyncAsync(sync);
+                }
+                else
+                {
+                    Sync newSync = new Sync()
+                    {
+                        isSynced = false
+                    };
+                    await App.Database.SaveSyncAsync(newSync);
+                }
                 await Shell.Current.GoToAsync("..");
             }
             else if(newCropErrorCode == 0)

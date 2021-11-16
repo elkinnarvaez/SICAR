@@ -39,7 +39,7 @@
                     <Entry x:Name="nameEntry" Text="{Binding Name, Mode=TwoWay}" Placeholder="Nombre del cultivo"></Entry>
                     <!--<Label HorizontalOptions="Center"  FontSize="30" VerticalOptions="CenterAndExpand" Text="Nombre"></Label>-->
                     <Picker x:Name="Ground"
-                            Title="Selecciona un tipo de Suelo"
+                            Title="Selecciona un tipo de suelo"
                             SelectedItem="{Binding Ground, Mode=TwoWay}">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
@@ -52,8 +52,8 @@
                             </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
-                    <Entry x:Name="deepEntry" Keyboard="Numeric" Text="{Binding Deep, Mode=TwoWay}" Placeholder="Profundidad de Raices(centimetros)"></Entry>
-                    <Entry x:Name="hectaresEntry" Keyboard="Numeric" Text="{Binding Hectare, Mode=TwoWay}" Placeholder="Cantidad de hectareas"></Entry>
+                    <Entry x:Name="deepEntry" Keyboard="Numeric" Text="{Binding Deep, Mode=TwoWay}" Placeholder="Profundidad de raices (en cm)"></Entry>
+                    <Entry x:Name="hectaresEntry" Keyboard="Numeric" Text="{Binding Hectare, Mode=TwoWay}" Placeholder="Cantidad de hectáreas"></Entry>
                     <!--<Label HorizontalOptions="Start" FontSize="20" Text="Fecha de Incio del Cultivo: "></Label>-->
                     <Label Text="Fecha de inicio:" Margin="5, 0, 0, 0" FontSize="17"></Label>
                     <DatePicker x:Name="initialDateCultivo"

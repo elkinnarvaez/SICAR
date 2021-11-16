@@ -133,6 +133,26 @@ namespace SICAR.Data
             return database.Table<WeatherStationData>().ToListAsync();
         }
 
+        public Task<int> DeleteWeatherStationDataAsync(WeatherStationData weatherStationData)
+        {
+            // Delete a session.
+            return database.DeleteAsync(weatherStationData);
+        }
+
+        public Task<int> SaveWeatherStationDataAsync(WeatherStationData weatherStationData)
+        {
+            if (weatherStationData.Id != 0)
+            {
+                // Update an existing weatherStationData.
+                return database.UpdateAsync(weatherStationData);
+            }
+            else
+            {
+                // Save a new weatherStationData.
+                return database.InsertAsync(weatherStationData);
+            }
+        }
+
         // Sync methods
         public Task<Sync> GetSyncStatusAsync()
         {

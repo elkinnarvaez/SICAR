@@ -115,6 +115,20 @@ namespace SICAR.ViewModels
                 Username = "";
                 Password = "";
                 RetypedPassword = "";
+                Sync sync = await App.Database.GetSyncStatusAsync();
+                if (sync != null)
+                {
+                    sync.isSynced = false;
+                    await App.Database.SaveSyncAsync(sync);
+                }
+                else
+                {
+                    Sync newSync = new Sync()
+                    {
+                        isSynced = false
+                    };
+                    await App.Database.SaveSyncAsync(newSync);
+                }
                 await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
             }
             else if (signUpErrorCode == 0)
