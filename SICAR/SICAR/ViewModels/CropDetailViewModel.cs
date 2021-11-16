@@ -18,6 +18,8 @@ namespace SICAR.ViewModels
         private int hectare;
         private string ground;
         private int deep;
+        float litersPerHectarePerDay;
+        float litersPerDay;
 
         Dictionary<string, string> cropCoefficients;
         Dictionary<string, string> growthStage;
@@ -69,6 +71,18 @@ namespace SICAR.ViewModels
                 cropId = value;
                 LoadCropId(value);
             }
+        }
+
+        public float LitersPerHectarePerDay
+        {
+            get => litersPerHectarePerDay;
+            set => SetProperty(ref litersPerHectarePerDay, value);
+        }
+
+        public float LitersPerDay
+        {
+            get => litersPerDay;
+            set => SetProperty(ref litersPerDay, value);
         }
 
         public int determineStage(string[] stages, int timeFromSeedtime)
@@ -165,13 +179,13 @@ namespace SICAR.ViewModels
                 //Console.WriteLine("------------------------------------------");
                 //Console.WriteLine(etc);
                 //Console.WriteLine("------------------------------------------");
-                float litersPerHectarePerDay = etc * 10 * 1000;
-                float litersPerDay = litersPerHectarePerDay * Hectare;
+                LitersPerHectarePerDay = etc * 10 * 1000;
+                LitersPerDay = LitersPerHectarePerDay * Hectare;
                 Console.WriteLine("------------------------------------------");
-                Console.WriteLine(litersPerHectarePerDay);
+                Console.WriteLine(LitersPerHectarePerDay);
                 Console.WriteLine("------------------------------------------");
                 Console.WriteLine("------------------------------------------");
-                Console.WriteLine(litersPerDay);
+                Console.WriteLine(LitersPerDay);
                 Console.WriteLine("------------------------------------------");
             }
             catch (Exception)

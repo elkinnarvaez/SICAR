@@ -4,11 +4,31 @@
              x:Class="SICAR.Views.CropDetailPage"
              Title="{Binding Title}">
     <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15">
-            <Label Text="Type:" FontSize="Medium" />
-            <Label Text="{Binding Type}" FontSize="Small"/>
-            <Label Text="Date:" FontSize="Medium" />
-            <Label Text="{Binding Date}" FontSize="Small"/>
+        <StackLayout Spacing="20" Padding="15" VerticalOptions="Center">
+            <FlexLayout Direction="Column" AlignItems="Center" Margin="0,0,0,30">
+                <Label FontSize="Large" FontAttributes="Bold" HorizontalTextAlignment="Center">Cantidad de agua necesaria por hectarea:</Label>
+                <!--<Label FontSize="Medium" Text="{Binding LitersPerHectarePerDay, Mode=TwoWay}"/>-->
+                <Label FontSize="Medium" VerticalOptions="CenterAndExpand" Margin="0,10,0,0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding LitersPerHectarePerDay, Mode=TwoWay}" />
+                            <Span Text=" Litros" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </FlexLayout>
+            <FlexLayout Direction="Column" AlignItems="Center">
+                <Label FontSize="Large" FontAttributes="Bold" HorizontalTextAlignment="Center">Cantidad de agua necesaria total:</Label>
+                <!--<Label FontSize="Medium" Text="{Binding LitersPerDay, Mode=TwoWay}"/>-->
+                <Label FontSize="Medium" VerticalOptions="CenterAndExpand" Margin="0,10,0,0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding LitersPerDay, Mode=TwoWay}" />
+                            <Span Text=" Litros" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </FlexLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
