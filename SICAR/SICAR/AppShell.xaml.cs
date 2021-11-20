@@ -31,6 +31,8 @@ namespace SICAR
         private bool activeInternetConnection;
         private bool unactiveInternetConnection;
         private bool isSynced;
+        private bool isSyncing;
+        private bool isChecking;
 
         // private const string pathToServiceAccountKeyFile = "sicarapp-credentials.json";
         private string pathToServiceAccountKeyFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "sicarapp-credentials.json");
@@ -89,6 +91,18 @@ namespace SICAR
             set => SetProperty(ref isSynced, value);
         }
 
+        public bool IsSyncing
+        {
+            get => isSyncing;
+            set => SetProperty(ref isSyncing, value);
+        }
+
+        public bool IsChecking
+        {
+            get => isChecking;
+            set => SetProperty(ref isChecking, value);
+        }
+
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {
             Session session = await App.Database.GetCurrentSessionAsync();
@@ -140,12 +154,199 @@ namespace SICAR
             }
         }
 
+        public async Task<bool> CheckSyncOnGoogleDrive(DriveService service)
+        {
+            if (activeInternetConnection == true && isSyncing == false)
+            {
+                IsChecking = true;
+                Console.WriteLine("--------------------------------------------------------------------------------------");
+                Console.WriteLine("Checking if everything is up date...");
+                Console.WriteLine("--------------------------------------------------------------------------------------");
+                List<String> linesUserFileGoogleDrive = GetLinesFileContentOnGoogleDrive(service, "User.txt");
+                List<String> linesCropFileGoogleDrive = GetLinesFileContentOnGoogleDrive(service, "Crop.txt");
+                List<String> linesAllWeatherStationDataFileGoogleDrive = GetLinesFileContentOnGoogleDrive(service, "WeatherStationData.txt");
+                List<SICAR.Models.User> users = await App.Database.GetUsersAsync();
+                List<SICAR.Models.Crop> crops = await App.Database.GetAllCropsAsync();
+                List<SICAR.Models.WeatherStationData> allWeatherStationData = await App.Database.GetAllWeatherStationData();
+
+                // Convert lines from Google Drive files to list objects
+                List<SICAR.Models.User> usersGoogleDrive = new List<SICAR.Models.User>();
+                List<SICAR.Models.Crop> cropsGoogleDrive = new List<SICAR.Models.Crop>();
+                List<SICAR.Models.WeatherStationData> allWeatherStationDataGoogleDrive = new List<SICAR.Models.WeatherStationData>();
+
+                foreach (string line in linesUserFileGoogleDrive)
+                {
+                    string[] subs = line.Split(',');
+                    string username = subs[1];
+                    string password = subs[2];
+                    string names = subs[3];
+                    string lastnames = subs[4];
+                    SICAR.Models.User user = new SICAR.Models.User()
+                    {
+                        Username = username,
+                        Password = password,
+                        Names = names,
+                        Lastnames = lastnames
+                    };
+                    usersGoogleDrive.Add(user);
+                }
+
+                foreach (string line in linesCropFileGoogleDrive)
+                {
+                    string[] subs = line.Split(',');
+                    string username = subs[1];
+                    string name = subs[2];
+                    string type = subs[3];
+                    string date = subs[4];
+                    string hectare = subs[5];
+                    string ground = subs[6];
+                    string deep = subs[7];
+                    SICAR.Models.Crop crop = new SICAR.Models.Crop()
+                    {
+                        Username = username,
+                        Name = name,
+                        Type = type,
+                        Date = date,
+                        Hectare = Int32.Parse(hectare),
+                        Ground = ground,
+                        Deep = Int32.Parse(deep)
+                    };
+                    cropsGoogleDrive.Add(crop);
+                }
+
+                foreach (string line in linesAllWeatherStationDataFileGoogleDrive)
+                {
+                    string[] subs = line.Split(',');
+                    string date = subs[1];
+                    string time = subs[2];
+                    string aveargeTemp = subs[3];
+                    string minTemp = subs[4];
+                    string maxTemp = subs[5];
+                    string averageHumidity = subs[6];
+                    string minHumidity = subs[7];
+                    string maxHumidity = subs[8];
+                    string atmosphericPressure = subs[9];
+                    string windSpeed = subs[10];
+                    string solarRadiation = subs[11];
+                    string precipitation = subs[12];
+                    string evapotranspiration = subs[13];
+                    SICAR.Models.WeatherStationData weatherStationData = new SICAR.Models.WeatherStationData()
+                    {
+                        Date = date,
+                        Time = time,
+                        AveargeTemp = float.Parse(aveargeTemp),
+                        MinTemp = float.Parse(minTemp),
+                        MaxTemp = float.Parse(maxTemp),
+                        AverageHumidity = float.Parse(averageHumidity),
+                        MinHumidity = float.Parse(minHumidity),
+                        MaxHumidity = float.Parse(maxHumidity),
+                        AtmosphericPressure = float.Parse(atmosphericPressure),
+                        WindSpeed = float.Parse(windSpeed),
+                        SolarRadiation = float.Parse(solarRadiation),
+                        Precipitation = float.Parse(precipitation),
+                        Evapotranspiration = float.Parse(evapotranspiration)
+                    };
+                    allWeatherStationDataGoogleDrive.Add(weatherStationData);
+                }
+
+                String usersString = "";
+                String usersGoogleDriveString = "";
+                foreach (SICAR.Models.User user in users)
+                {
+                    usersString = usersString + user.Id.ToString() + "," + user.Username + "," + user.Password + "," + user.Names + "," + user.Lastnames + Environment.NewLine;
+                }
+                foreach (SICAR.Models.User user in usersGoogleDrive)
+                {
+                    usersGoogleDriveString = usersGoogleDriveString + user.Id.ToString() + "," + user.Username + "," + user.Password + "," + user.Names + "," + user.Lastnames + Environment.NewLine;
+                }
+
+                String cropsString = "";
+                String cropsGoogleDriveString = "";
+                foreach (SICAR.Models.Crop crop in crops)
+                {
+                    cropsString = cropsString + crop.Id.ToString() + "," + crop.Username + "," + crop.Name + "," + crop.Type + "," + crop.Date + "," + crop.Hectare.ToString() + "," + crop.Ground + "," + crop.Deep.ToString() + Environment.NewLine;
+                }
+                foreach (SICAR.Models.Crop crop in cropsGoogleDrive)
+                {
+                    cropsGoogleDriveString = cropsGoogleDriveString + crop.Id.ToString() + "," + crop.Username + "," + crop.Name + "," + crop.Type + "," + crop.Date + "," + crop.Hectare.ToString() + "," + crop.Ground + "," + crop.Deep.ToString() + Environment.NewLine;
+                }
+
+                String allWeatherStationDataString = "";
+                String allWeatherStationDataGoogleDriveString = "";
+                foreach (SICAR.Models.WeatherStationData weatherStationData in allWeatherStationData)
+                {
+                    allWeatherStationDataString = allWeatherStationDataString + weatherStationData.Id.ToString() + "," + weatherStationData.Date + "," + weatherStationData.Time + "," + weatherStationData.AveargeTemp.ToString() + "," + weatherStationData.MinTemp.ToString() + "," + weatherStationData.MaxTemp.ToString() + "," + weatherStationData.AverageHumidity.ToString() + "," + weatherStationData.MinHumidity.ToString() + "," + weatherStationData.MaxHumidity.ToString() + "," + weatherStationData.AtmosphericPressure.ToString() + "," + weatherStationData.WindSpeed.ToString() + "," + weatherStationData.SolarRadiation.ToString() + "," + weatherStationData.Precipitation.ToString() + "," + weatherStationData.Evapotranspiration.ToString() + Environment.NewLine;
+                }
+                foreach (SICAR.Models.WeatherStationData weatherStationData in allWeatherStationDataGoogleDrive)
+                {
+                    allWeatherStationDataGoogleDriveString = allWeatherStationDataGoogleDriveString + weatherStationData.Id.ToString() + "," + weatherStationData.Date + "," + weatherStationData.Time + "," + weatherStationData.AveargeTemp.ToString() + "," + weatherStationData.MinTemp.ToString() + "," + weatherStationData.MaxTemp.ToString() + "," + weatherStationData.AverageHumidity.ToString() + "," + weatherStationData.MinHumidity.ToString() + "," + weatherStationData.MaxHumidity.ToString() + "," + weatherStationData.AtmosphericPressure.ToString() + "," + weatherStationData.WindSpeed.ToString() + "," + weatherStationData.SolarRadiation.ToString() + "," + weatherStationData.Precipitation.ToString() + "," + weatherStationData.Evapotranspiration.ToString() + Environment.NewLine;
+                }
+
+                if(usersString == usersGoogleDriveString && cropsString == cropsGoogleDriveString && allWeatherStationDataString == allWeatherStationDataGoogleDriveString)
+                {
+                    Sync sync = await App.Database.GetSyncStatusAsync();
+                    if (sync != null)
+                    {
+                        sync.isSynced = false;
+                        await App.Database.SaveSyncAsync(sync);
+                    }
+                    else
+                    {
+                        Sync newSync = new Sync()
+                        {
+                            isSynced = false
+                        };
+                        await App.Database.SaveSyncAsync(newSync);
+                    }
+                }
+                else
+                {
+                    Sync sync = await App.Database.GetSyncStatusAsync();
+                    if (sync != null)
+                    {
+                        sync.isSynced = false;
+                        await App.Database.SaveSyncAsync(sync);
+                    }
+                    else
+                    {
+                        Sync newSync = new Sync()
+                        {
+                            isSynced = false
+                        };
+                        await App.Database.SaveSyncAsync(newSync);
+                    }
+                }
+                Console.WriteLine("--------------------------------------------------------------------------------------");
+                Console.WriteLine("Finished checking.");
+                Console.WriteLine("--------------------------------------------------------------------------------------");
+                IsChecking = false;
+            }
+            else
+            {
+                if(activeInternetConnection == false)
+                {
+                    Console.WriteLine("--------------------------------------------------------------------------------------");
+                    Console.WriteLine("Please verify your internet because you might be working with outdated data.");
+                    Console.WriteLine("--------------------------------------------------------------------------------------");
+                }
+                else
+                {
+                    Console.WriteLine("--------------------------------------------------------------------------------------");
+                    Console.WriteLine("Can't check right now.");
+                    Console.WriteLine("--------------------------------------------------------------------------------------");
+                }
+            }
+            return true;
+        }
+
+
         public async void SyncingProcessWithGoogleDrive(DriveService service)
         {
             if(isSynced == false)
             {
-                if(activeInternetConnection == true)
+                if(activeInternetConnection == true && isChecking == false)
                 {
+                    IsSyncing = true;
                     Console.WriteLine("--------------------------------------------------------------------------------------");
                     Console.WriteLine("Syncing in process...");
                     Console.WriteLine("--------------------------------------------------------------------------------------");
@@ -351,12 +552,22 @@ namespace SICAR
                         };
                         await App.Database.SaveSyncAsync(newSync);
                     }
+                    IsSyncing = false;
                 }
                 else
                 {
-                    Console.WriteLine("--------------------------------------------------------------------------------------");
-                    Console.WriteLine("Please verify your internet connection in order to sync the changes.");
-                    Console.WriteLine("--------------------------------------------------------------------------------------");
+                    if(activeInternetConnection == false)
+                    {
+                        Console.WriteLine("--------------------------------------------------------------------------------------");
+                        Console.WriteLine("Please verify your internet connection in order to sync the changes.");
+                        Console.WriteLine("--------------------------------------------------------------------------------------");
+                    }
+                    else
+                    {
+                        Console.WriteLine("--------------------------------------------------------------------------------------");
+                        Console.WriteLine("Can't sync right now.");
+                        Console.WriteLine("--------------------------------------------------------------------------------------");
+                    }
                 }
             }
             else
@@ -597,6 +808,23 @@ namespace SICAR
             //UpdateFileOnGoogleDrive(service, "Crop.txt", l);
             //UpdateFileOnGoogleDrive(service, "User.txt", l);
 
+            //string[] l = {"1,30/8/2021,12:0:0,30.07,29.20,31.20,61.50,51.80,70.90,90473.00,0.02,1321.27,0.00,1.30",
+            //"2,30/8/2021,13:0:0,29.92,29.10,30.80,54.38,52.80,55.90,90362.00,0.03,1385.75,0.00,1.79",
+            //"3,30/8/2021,14:0:0,29.72,29.10,30.30,54.23,52.70,56.90,90247.00,0.02,1398.46,0.00,1.35",
+            //"4,30/8/2021,15:0:0,27.99,27.10,29.60,77.83,53.80,99.90,90169.00,0.03,1378.19,0.00,1.41",
+            //"5,30/8/2021,16:0:0,27.23,26.20,28.60,82.83,68.30,97.60,90114.00,0.01,1343.24,0.00,1.21",
+            //"6,30/8/2021,17:0:0,28.25,27.90,28.80,65.86,61.80,69.90,90106.00,0.01,1340.53,0.00,1.43",
+            //"7,30/8/2021,18:0:0,27.00,25.90,27.90,85.61,64.40,99.90,90199.00,0.01,1361.97,0.00,1.21",
+            //"8,30/8/2021,19:0:0,24.98,24.30,25.90,97.37,95.60,99.90,90265.00,0.01,1115.85,0.00,0.89",
+            //"9,30/8/2021,20:0:0,23.40,21.90,24.30,98.72,96.80,99.90,90358.00,0.01,1045.25,0.00,1.03",
+            //"10,30/8/2021,21:0:0,21.81,21.70,22.00,99.90,99.90,99.90,90445.00,0.01,1121.30,0.00,1.00",
+            //"11,30/8/2021,22:0:0,22.62,22.00,23.00,99.90,99.90,99.90,90534.00,0.01,1116.96,0.00,1.01",
+            //"12,30/8/2021,23:0:0,22.55,22.10,22.80,99.90,99.90,99.90,90555.00,0.01,1115.66,0.00,1.01",
+            //"13,31/8/2021,0:0:0,21.57,21.30,22.10,99.90,99.90,99.90,90540.00,0.00,1112.03,0.00,0.99",
+            //"14,31/8/2021,5:0:0,21.57,21.30,22.10,99.90,99.90,99.90,90540.00,0.00,1112.03,0.00,0.99"};
+            //List<string> data = new List<string>(l);
+            //UpdateFileOnGoogleDrive(service, "WeatherStationData.txt", data);
+
             var startTimeSpan = TimeSpan.Zero;
             var periodTimeSpan = TimeSpan.FromSeconds(0.01);
             var timer = new System.Threading.Timer((e) =>
@@ -607,9 +835,10 @@ namespace SICAR
             }, null, startTimeSpan, periodTimeSpan);
 
             var startTimeSpan2 = TimeSpan.Zero;
-            var periodTimeSpan2 = TimeSpan.FromSeconds(20);
+            var periodTimeSpan2 = TimeSpan.FromSeconds(25);
             var timer2 = new System.Threading.Timer((e) =>
             {
+                CheckSyncOnGoogleDrive(service).Wait();
                 SyncingProcessWithGoogleDrive(service);
             }, null, startTimeSpan2, periodTimeSpan2);
         }
