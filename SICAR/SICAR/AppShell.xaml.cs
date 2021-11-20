@@ -177,12 +177,14 @@ namespace SICAR
                 foreach (string line in linesUserFileGoogleDrive)
                 {
                     string[] subs = line.Split(',');
+                    int id = int.Parse(subs[0]);
                     string username = subs[1];
                     string password = subs[2];
                     string names = subs[3];
                     string lastnames = subs[4];
                     SICAR.Models.User user = new SICAR.Models.User()
                     {
+                        Id = id,
                         Username = username,
                         Password = password,
                         Names = names,
@@ -194,6 +196,7 @@ namespace SICAR
                 foreach (string line in linesCropFileGoogleDrive)
                 {
                     string[] subs = line.Split(',');
+                    int id = int.Parse(subs[0]);
                     string username = subs[1];
                     string name = subs[2];
                     string type = subs[3];
@@ -203,6 +206,7 @@ namespace SICAR
                     string deep = subs[7];
                     SICAR.Models.Crop crop = new SICAR.Models.Crop()
                     {
+                        Id = id,
                         Username = username,
                         Name = name,
                         Type = type,
@@ -217,6 +221,7 @@ namespace SICAR
                 foreach (string line in linesAllWeatherStationDataFileGoogleDrive)
                 {
                     string[] subs = line.Split(',');
+                    int id = int.Parse(subs[0]);
                     string date = subs[1];
                     string time = subs[2];
                     string aveargeTemp = subs[3];
@@ -232,6 +237,7 @@ namespace SICAR
                     string evapotranspiration = subs[13];
                     SICAR.Models.WeatherStationData weatherStationData = new SICAR.Models.WeatherStationData()
                     {
+                        Id = id,
                         Date = date,
                         Time = time,
                         AveargeTemp = float.Parse(aveargeTemp),
@@ -281,20 +287,19 @@ namespace SICAR
                 {
                     allWeatherStationDataGoogleDriveString = allWeatherStationDataGoogleDriveString + weatherStationData.Id.ToString() + "," + weatherStationData.Date + "," + weatherStationData.Time + "," + weatherStationData.AveargeTemp.ToString() + "," + weatherStationData.MinTemp.ToString() + "," + weatherStationData.MaxTemp.ToString() + "," + weatherStationData.AverageHumidity.ToString() + "," + weatherStationData.MinHumidity.ToString() + "," + weatherStationData.MaxHumidity.ToString() + "," + weatherStationData.AtmosphericPressure.ToString() + "," + weatherStationData.WindSpeed.ToString() + "," + weatherStationData.SolarRadiation.ToString() + "," + weatherStationData.Precipitation.ToString() + "," + weatherStationData.Evapotranspiration.ToString() + Environment.NewLine;
                 }
-
                 if(usersString == usersGoogleDriveString && cropsString == cropsGoogleDriveString && allWeatherStationDataString == allWeatherStationDataGoogleDriveString)
                 {
                     Sync sync = await App.Database.GetSyncStatusAsync();
                     if (sync != null)
                     {
-                        sync.isSynced = false;
+                        sync.isSynced = true;
                         await App.Database.SaveSyncAsync(sync);
                     }
                     else
                     {
                         Sync newSync = new Sync()
                         {
-                            isSynced = false
+                            isSynced = true
                         };
                         await App.Database.SaveSyncAsync(newSync);
                     }
